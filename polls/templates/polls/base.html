@@ -1,0 +1,67 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+{% include "./styles.html" %}
+{% endblock %}
+<head>
+    <script type="text/javascript">
+		<!--
+		function toggle_visibility(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == 'block')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = 'block';
+		}
+		function toggle_visibility_table(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == '')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = '';
+		}
+		//-->
+	</script>
+</head>
+<body style="padding-top: 0px;">
+    {% block menu %}
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">CENSUS/ADMIN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/polls/person/">Persons</a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="/polls/survey/">Survey</a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="/polls/question/">Question</a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="/polls/choice-list/">Choice List</a>
+          </li>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+    {% block page %}
+    {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/rm/static/jquery.filtertable.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+</body>
+</html>

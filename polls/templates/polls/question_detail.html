@@ -1,0 +1,137 @@
+{% extends 'polls/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h1>[Question] <u>{{ object.name }}</u></h1>
+            <blockquote class="blockquote">{{ object.text }}</blockquote>
+            <p><a href="/polls/question-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
+        </div>
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Information</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th style="padding: 1px;">ID</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.id }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Name</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.name }}</td>
+                </tr>
+                <!--tr>
+                    <th style="padding: 1px;">Text</th>
+                    <td style="padding: 1px;text-align: right;"><blockquote class="blockquote">{{ object.text }}</blockquote></td>
+                </tr-->
+                <tr>
+                    <th style="padding: 1px;">Data Type</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.data_type_name }}</td>
+                </tr>
+
+                {% if object.data_type == object.SSMC or object.data_type == object.MSMC %}
+                <!--tr>
+                    <th style="padding: 1px;">Choice List</th>
+                    <td style="padding: 1px;text-align: right;">
+                        <a href="/polls/choice-list-details/{{ object.choice_list.id }}/">{{ object.choice_list }}</a>
+                    </td>
+                </tr-->
+                {% endif %}
+                {% if object.data_type == object.NUMBER_RANGE %}
+                <tr>
+                    <th style="padding: 1px;">Range Minimum</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.range_min }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Range Maximum</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.range_max }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Range Step</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.range_step }}</td>
+                </tr>
+                {% endif %}
+            </table>
+
+        </div>
+    </div>
+
+    {% if object.data_type == object.SSMC or object.data_type == object.MSMC %}
+    {% if object.choice_list %}
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Варианты ответа (Choice List <b><a href="/polls/choice-list-details/{{ object.choice_list.id }}/">{{ object.choice_list }}</a></b>)</h2>
+            {% if object.choice_list.choices.all %}
+            <ul class="list-group">
+                {% for i in object.choice_list.choices.all %}
+                <li class="list-group-item">{% if object.data_type == object.SSMC %}<input type="radio">{% endif %}{% if object.data_type == object.MSMC %}<input type="checkbox">{% endif %} {{ i.name }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <p><a href="/polls/question-update/{{ object.id }}/choice-list" class="btn btn-secondary">Change Choice List</a></p>
+        </div>
+    </div>
+    {% else %}
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <p><a href="/polls/question-update/{{ object.id }}/choice-list" class="btn btn-secondary">Select Choice List</a></p>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if object.data_type == object.NUMBER_RANGE %}
+    {% if object.range_params_not_null %}
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <input type="range" class="custom-range" id="demo_range" min="{{ object.range_min }}" max="{{ object.range_max }}" step="{{ object.range_step }}" oninput="range_demo_value.value = demo_range.value">
+        </div>
+        <div class="col-md-12" style="padding: 0px;">
+            <p class="text-center"><output name="range_demo_output" id="range_demo_value"></output></p>
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <p><a href="/polls/question-update/{{ object.id }}/range" class="btn btn-secondary">Edit Range Parameters</a></p>
+        </div>
+    </div>
+    {% else %}
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <p><a href="/polls/question-update/{{ object.id }}/range" class="btn btn-secondary">Define Range Parameters</a></p>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if object.surveys.all %}
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Surveys</h2>
+            <table id="map-survey-question-list" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for i in object.surveys.all %}
+                <tr>
+                    <td>{{ i.survey.name }}</td>
+                    <td class="technical-links"><a href="/polls/survey-details/{{ i.survey.id }}/">Details</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'polls/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h1>[Person] <u>{{ object }}</u></h1>
+        </div>
+        <div class="col-md-4" style="padding: 0px;">
+            <h2>Information</h2>
+            <p><a href="/polls/person-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
+            <table class="table table-hover">
+                <tr>
+                    <th style="padding: 1px;">ID</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.id }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Name First</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.name_first }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Name Second</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.name_second }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Name Last</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.name_last }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Email</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.email }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Birthday</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.birth_date }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Sex</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.sex }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Title</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.title }}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    {% if object.surveys.all %}
+    <div class="row align-items-start">
+        <div class="col-md-6" style="padding: 0px;">
+            <h2>Surveys Assigned</h2>
+            <table id="choice-list-list" class="table table-hover">
+                <thead>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                {% for i in object.surveys.all %}
+                <tr class="parent">
+                    <td>{{ i.survey.name }}</td>
+                    <td class="technical-links"><a href="/polls/survey-details/{{ i.survey.id }}/">Details</a></td>
+                    <td class="technical-links"><a href="/polls/survey-update/{{ i.survey.id }}/">Edit</a></td>
+                    <td class="technical-links"><a href="/polls/survey-delete/{{ i.survey.id }}/">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'polls/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0;">
+            <h1>Surveys</h1>
+            <p><a href="/polls/survey/create/" class="btn btn-secondary">Create New</a></p>
+            <table id="choice-list-list" class="table table-hover">
+                <thead>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                {% for i in items %}
+                <tr class="parent">
+                    <td>{{ i.name }}</td>
+                    <td class="technical-links"><a href="/polls/survey-details/{{ i.id }}">Details</a></td>
+                    <td class="technical-links"><a href="/polls/survey-update/{{ i.id }}">Edit</a></td>
+                    <td class="technical-links"><a href="/polls/survey-delete/{{ i.id }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+$('table').filterTable({
+    containerClass: "form-group",
+    containerTag: "div",
+    inputType: "text",
+    label: "Применить фильтр: "
+});
+</script>
+{% endblock %}

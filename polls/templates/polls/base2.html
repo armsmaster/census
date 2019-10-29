@@ -1,0 +1,107 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+{% include "./styles.html" %}
+{% endblock %}
+<head>
+    <script type="text/javascript">
+		<!--
+		function toggle_visibility(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == 'block')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = 'block';
+		}
+		function toggle_visibility_table(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == '')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = '';
+		}
+		//-->
+	</script>
+</head>
+<body style="padding-top: 60px;">
+    {% block menu %}
+    <div class="navbar-wrapper">
+        <div class="container">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">CENSUS/ADMIN</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dashboards <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">General</li>
+                                    <li><a href="/rm/limit-viol-util">All Violations</a></li>
+                                    <li><a href="/rm/limit-util">All Limits (Utils)</a></li>
+                                    <li><a href="/rm/restriction-list/">All Restrictions</a></li>
+                                    <li><a href="/rm/limit-util?limit_type=limit-total"><del>Issuer/Counterparty Aggregate Limits</del></a></li>
+                                    <li><a href="/rm/limit-util?limit_type=limit-n6"><del>Issuer/Counterparty N6 Limits</del></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">Fixed Income</li>
+                                    <li><a href="/rm/limit-util?limit_type=limit-position-bond">Fixed Income / Issuers</a></li>
+                                    <li><a href="#"><del>Fixed Income / Individual Issue Limits</del></a></li>
+                                    <li><a href="#"><del>Fixed Income / Market Risk</del></a></li>
+                                    <li><a href="/rm/limit-portf-util?limit_type=FI">Fixed Income / Portfolio-Level Limits</a></li>
+                                    <li><a href="#"><del>Fixed Income / Counterparties</del></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">REPO</li>
+                                    <li><a href="/rm/portfolio-detail/repo/">REPO / All limits</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">Dealing</li>
+                                    <li><a href="#"><del>Bnotes / Counterparties</del></a></li>
+                                    <li><a href="/rm/limit-util?limit_type=limit-fx-risk-cpty">FX / Pre-Settlement</a></li>
+                                    <li><a href="/rm/limit-util?limit_type=limit-settle-fx-otc">FX / Settlement</a></li>
+                                    <li><a href="/rm/limit-util?limit_type=limit-mbk">MBK / Counterparties</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">Equity</li>
+                                    <li><a href="/rm/limit-util?limit_type=limit-equity">Equity / Security Limits</a></li>
+                                    <li><a href="#"><del>Equity / Portfolio-Level Limits</del></a></li>
+                                    <li><a href="#"><del>Equity / Counterparties</del></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">Derivatives</li>
+                                    <li><a href="#"><del>DRV-Prop / Market Risk Limits</del></a></li>
+                                    <li><a href="#"><del>DRV-Prop / Counterparties</del></a></li>
+                                    <li><a href="#"><del>DRV-Prop / Clients</del></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/polls/person/">Persons</a></li>
+                            <li><a href="/polls/survey/">Surveys</a></li>
+                            <li><a href="/polls/question/">Questions</a></li>
+                            <li><a href="/polls/choice-list/">Choice Lists</a></li>
+                        </ul>
+                        {% if user.is_authenticated %}
+                        <p class="navbar-text navbar-right"><a href="#" class="navbar-link">{{ user.username }}</a></p>
+                        {% else %}
+                        <p class="navbar-text navbar-right">Not signed in</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+    {% block page %}
+    {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/rm/static/jquery.filtertable.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+</body>
+</html>

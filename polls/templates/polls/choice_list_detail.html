@@ -1,0 +1,50 @@
+{% extends 'polls/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h1>[Choice List] <u>{{ object.name }}</u></h1>
+            <p><a href="/polls/choice-list-update/{{ i.id }}" class="btn btn-secondary">Rename</a></p>
+        </div>
+    </div>
+
+
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Choices</h2>
+            <p><a href="#" class="btn btn-secondary" role="button" onclick="toggle_visibility('add-choice-form');">Add Choice</a></p>
+            <div class="alert alert-warning" id="add-choice-form" style="display: none;">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input class="btn btn-secondary" type="submit" value="Add" />
+                </form>
+            </div>
+            {% if object.choices.all %}
+            <table id="choice-list-list" class="table table-hover">
+                <thead>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                {% for i in object.choices.all %}
+                <tr class="parent">
+                    <td>{{ i.id }}</td>
+                    <td>{{ i.name }}</td>
+                    <td class="technical-links"><a href="/polls/choice-update/{{ i.id }}/">Rename</a></td>
+                    <td class="technical-links"><a href="/polls/choice-delete/{{ i.id }}/">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

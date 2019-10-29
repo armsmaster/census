@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+{% include "./styles.html" %}
+{% endblock %}
+<head>
+    <script type="text/javascript">
+		<!--
+		function toggle_visibility(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == 'block')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = 'block';
+		}
+		function toggle_visibility_table(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == '')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = '';
+		}
+		//-->
+	</script>
+</head>
+<body style="padding-top: 60px;">
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/rm/static/jquery.filtertable.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+</body>
+</html>

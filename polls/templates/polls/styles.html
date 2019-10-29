@@ -1,0 +1,84 @@
+{% load humanize %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<title>{% block title %}CENSUS{% endblock %}</title>
+    
+    <script type="text/javascript" src="/rm/static/sorttable.js"></script>
+    <script type="text/javascript">
+        function toggle_visibility(id) {
+           var e = document.getElementById(id);
+           if(e.style.display == 'block')
+              e.style.display = 'none';
+           else
+              e.style.display = 'block';
+        }
+    </script>
+    <script>
+        $(function() {
+            $( ".datepicker" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2012",
+                // You can put more options here.
+            });
+        });
+    </script>
+    <style type="text/css">
+    tr.child {
+        color: #808080;
+        //font-size: 0.75em;
+    }
+    td.number {
+        text-align: right;
+    }
+    td.technical-links {
+        text-align: right;
+    }
+    input {
+        @extend .form-control;
+    }
+    #logo-container{
+        margin: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding-top: 5px;
+        width:200px;
+        height:30px;
+        background: #000000;
+        color: white;
+        text-align: center;
+    }
+    a.menu{
+        margin-bottom: 2px;
+        margin-top: 2px;
+        padding: 2px;
+        padding-left: 5px;
+        padding-right: 5px;
+        background: #666666;
+        color: white;
+        text-align: center;
+        line-height: 160%;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+    a.showhide{
+        margin-bottom: 2px;
+        margin-top: 2px;
+        padding: 2px;
+        padding-left: 5px;
+        padding-right: 5px;
+        background: #999999;
+        color: white;
+        text-align: center;
+        line-height: 160%;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+    </style>
+</head>
