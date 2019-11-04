@@ -6,7 +6,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h1>[Choice List] <u>{{ object.name }}</u></h1>
-            <p><a href="/polls/choice-list-update/{{ i.id }}" class="btn btn-secondary">Rename</a></p>
+            <p><a href="/polls/choice-list-update/{{ object.id }}" class="btn btn-secondary">Rename</a></p>
         </div>
     </div>
 
@@ -23,8 +23,8 @@
                 </form>
             </div>
             {% if object.choices.all %}
-            <table id="choice-list-list" class="table table-hover">
-                <thead>
+            <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
                     <th>Id</th>
                     <th>Name</th>
                     <th></th>

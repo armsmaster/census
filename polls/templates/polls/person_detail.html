@@ -52,8 +52,8 @@
     <div class="row align-items-start">
         <div class="col-md-6" style="padding: 0px;">
             <h2>Surveys Assigned</h2>
-            <table id="choice-list-list" class="table table-hover">
-                <thead>
+            <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
                     <th>Name</th>
                     <th></th>
                     <th></th>
@@ -73,6 +73,32 @@
         </div>
     </div>
     {% endif %}
+	
+	{% if object.answers.all %}
+	<div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Answers</h2>
+            <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
+					<tr>
+						<th style="width: 25%">Survey</th>
+						<th style="width: 25%">Question</th>
+						<th style="width: 50%">Answer</th>
+					</tr>
+				</thead>
+                <tbody>
+                {% for i in object.answers.all %}
+                <tr class="parent">
+                    <td>{{ i.survey_instance.survey }}</td>
+					<td>{{ i.question }}</td>
+                    <td>{{ i.data }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+	{% endif %}
 
 </div>
 {% endblock %}

@@ -21,23 +21,28 @@
 						</li>
 					{% endfor %}
 					</ul>
+					
 					{% endif %}
 					{% if q_current.question.data_type == q_current.question.NUMBER_RANGE %}
 					<div class="col-md-12" style="padding: 0px;">
-						<input type="range" class="custom-range" id="demo_range" min="{{ q_current.question.range_min }}" max="{{ q_current.question.range_max }}" step="{{ q_current.question.range_step }}" oninput="range_demo_value.value = demo_range.value">
+						<input type="range" class="custom-range" id="demo_range" min="{{ q_current.question.range_min }}" max="{{ q_current.question.range_max }}" step="{{ q_current.question.range_step }}" oninput="id_data.value = demo_range.value; range_demo_value.value=demo_range.value">
 					</div>
 					<div class="col-md-12" style="padding: 0px;">
 						<p class="text-center"><output name="range_demo_output" id="range_demo_value"></output></p>
+						{{form}}
 					</div>
 					{% endif %}
 					{% if q_current.question.data_type == q_current.question.TEXT %}
-					<div class="col-md-12" style="padding: 0px;">
-						<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+					<div class="row justify-content-center">
+						{{form.data}}
 					</div>
 					{% endif %}
 					{% if q_current.question.data_type == q_current.question.NUMBER %}
-					<div class="col-md-12" style="padding: 0px;">
+					<!--div class="col-md-12" style="padding: 0px;">
 						<input type="number" class="form-control" id="exampleInputNumber">
+					</div-->
+					<div class="row justify-content-center">
+						{{form.data}}
 					</div>
 					{% endif %}
 				</div>

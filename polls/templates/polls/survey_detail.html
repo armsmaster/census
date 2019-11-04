@@ -39,12 +39,11 @@
                 </form>
             </div>
             {% if object.questions.all %}
-            <table id="map-survey-question-list" class="table table-hover">
-                <thead>
+            <table id="map-survey-question-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
                     <th>Sort Order</th>
                     <th>Name</th>
                     <th>Type</th>
-                    <th></th>
                     <th></th>
                     <th></th>
                 </thead>
@@ -55,8 +54,7 @@
                     <td>{{ i.question.name }}</td>
                     <td>{{ i.question.data_type }}</td>
                     <td class="technical-links"><a href="/polls/question-details/{{ i.question.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/polls/question-update/{{ i.question.id }}/">Edit</a></td>
-                    <td class="technical-links"><a href="/polls/question-delete/{{ i.question.id }}/">Delete</a></td>
+                    <td class="technical-links"><a href="/polls/survey-question-delete/{{ i.id }}/">Delete from Survey</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -71,8 +69,8 @@
             <h2>Persons Assigned</h2>
             <p><a href="/polls/survey-update/{{ object.id }}/add-person" class="btn btn-secondary">Add Person</a></p>
             {% if object.persons.all %}
-            <table id="map-survey-person-list" class="table table-hover">
-                <thead>
+            <table id="map-survey-person-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
                     <th>Email</th>
                     <th>Name</th>
                     <th>Last Name</th>
@@ -90,11 +88,11 @@
                     <td>{{ i.person.name_first }}</td>
                     <td>{{ i.person.name_last }}</td>
                     <td>{{ i.random_letters }}</td>
-                    <td>{{ i.time_visit }}</td>
-                    <td>{{ i.time_start }}</td>
-                    <td>{{ i.time_end }}</td>
+                    <td>{{ i.time_visit|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ i.time_start|date:"d.m.Y H:i:s" }}</td>
+                    <td>{{ i.time_end|date:"d.m.Y H:i:s" }}</td>
                     <td><a href="/polls/survey/{{ i.id }}/{{ i.random_letters }}/">Link</a></td>
-                    <td class="technical-links"><a href="/polls/map-person-survey-delete/{{ i.id }}/">Delete</a></td>
+                    <td class="technical-links"><a href="/polls/survey-person-delete/{{ i.id }}/">Delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -102,6 +100,33 @@
             {% endif %}
         </div>
     </div>
+	
+	{% if object.answers.all %}
+	<div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Answers</h2>
+			<p><a href="/polls/survey-details/{{ object.id }}/export-answers/" class="btn btn-success">Export to XLSX</a></p>
+            <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
+					<tr>
+						<th style="width: 25%">Person</th>
+						<th style="width: 25%">Question</th>
+						<th style="width: 50%">Answer</th>
+					</tr>
+				</thead>
+                <tbody>
+                {% for i in object.answers.all %}
+                <tr class="parent">
+                    <td>{{ i.survey_instance.person }}</td>
+                    <td>{{ i.question }}</td>
+                    <td>{{ i.data }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+	{% endif %}
 
 
 </div>

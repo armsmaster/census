@@ -3,38 +3,36 @@
 {% block content %}
 <div class="container">
     <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h1>Delete Choice List</h1>
+            <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+                <p>Are you sure you want to delete "{{ object }}"?</p>
+				<input type="submit" value="Confirm">
+            </form>
+        </div>
+    </div>
+	{% if object.questions.all %}
+	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
-            <h1>Questions</h1>
-            <p><a href="/polls/question/create/" class="btn btn-secondary">Create New</a></p>
+            <h2>Affected Questions</h1>
             <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
                     <th>Name</th>
                     <th>Type</th>
                     <th></th>
-                    <th></th>
-                    <th></th>
                 </thead>
                 <tbody>
-                {% for i in items %}
+                {% for i in object.questions.all %}
                 <tr class="parent">
                     <td>{{ i.name }}</td>
                     <td>{{ i.data_type_name }}</td>
                     <td class="technical-links"><a href="/polls/question-details/{{ i.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/polls/question-update/{{ i.id }}/">Edit</a></td>
-                    <td class="technical-links">{% if i.can_delete %}<a href="/polls/question-delete/{{ i.id }}/">Delete</a>{% endif %}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+	{% endif %}
 </div>
-<script>
-$('table').filterTable({
-    containerClass: "form-group",
-    containerTag: "div",
-    inputType: "text",
-    label: "Применить фильтр: "
-});
-</script>
 {% endblock %}

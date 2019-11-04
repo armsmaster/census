@@ -13,7 +13,9 @@ class Survey(models.Model):
 
     def __str__(self):
         return self.name
-
+    
+    def answers(self):
+        return Answer.objects.filter(survey_instance__survey=self)
 
 class ChoiceList(models.Model):
     name = models.CharField(max_length=200)
@@ -27,7 +29,7 @@ class Choice(models.Model):
     name = models.CharField(max_length=500)
 
     def __str__(self):
-        return '[{}] ! {}'.format(self.choice_list.name, self.name)
+        return 'Choice <{n}> (Choice List <{l}>)'.format(l=self.choice_list.name, n=self.name)
 
 
 class Question(models.Model):
@@ -72,7 +74,13 @@ class Question(models.Model):
 
     def range_params_not_null(self):
         return self.range_min is not None and self.range_max is not None and self.range_step is not None
-
+    
+    def can_delete(self):
+        if self.surveys.all():
+            return False
+        if self.answers.all():
+            return False
+        return True
 
 class MapSurveyQuestion(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
@@ -81,6 +89,9 @@ class MapSurveyQuestion(models.Model):
 
     def __str__(self):
         return '{} ! {}'.format(self.survey.name, self.question.name)
+        
+    def answers(self):
+        return self.question.answers.all().filter(survey_instance__survey=self.survey)
 
 
 class Person(models.Model):
@@ -102,6 +113,9 @@ class Person(models.Model):
 
     def __str__(self):
         return self.email
+        
+    def answers(self):
+        return Answer.objects.filter(survey_instance__person=self)
 
 
 class MapUserSurvey(models.Model):
