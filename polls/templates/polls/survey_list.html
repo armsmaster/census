@@ -5,7 +5,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
             <h1>Surveys</h1>
-            <p><a href="/polls/survey/create/" class="btn btn-secondary">Create New</a></p>
+            <p><a href="/survey/create/" class="btn btn-secondary">Create New</a></p>
             <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
                     <th>Name</th>
@@ -17,9 +17,9 @@
                 {% for i in items %}
                 <tr class="parent">
                     <td>{{ i.name }}</td>
-                    <td class="technical-links"><a href="/polls/survey-details/{{ i.id }}">Details</a></td>
-                    <td class="technical-links"><a href="/polls/survey-update/{{ i.id }}">Edit</a></td>
-                    <td class="technical-links"><a href="/polls/survey-delete/{{ i.id }}">Delete</a></td>
+                    <td class="technical-links"><a href="/survey-details/{{ i.id }}">Details</a></td>
+                    <td class="technical-links"><a href="/survey-update/{{ i.id }}">Edit</a></td>
+                    <td class="technical-links"><a href="/survey-delete/{{ i.id }}">Delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

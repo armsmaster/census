@@ -16,10 +16,39 @@ class Survey(models.Model):
     
     def answers(self):
         return Answer.objects.filter(survey_instance__survey=self)
+        
+    def errors(self):
+        output = []
+        questions = []
+        for msq in self.questions.all():
+            q = msq.question
+            if q not in questions:
+                questions.append(q)
+            else:
+                err = 'Duplicate Question <b>{}</b>'.format(q.name)
+                if err not in output:
+                    output.append(err)
+        persons = []
+        for msp in self.persons.all():
+            p = msp.person
+            if p not in persons:
+                persons.append(p)
+            else:
+                err = 'Duplicate Assignment <b>{}</b>'.format(p)
+                if err not in output:
+                    output.append(err)
+        return output
+            
 
 class ChoiceList(models.Model):
     name = models.CharField(max_length=200)
-
+    
+    def has_undef_numeric_values(self):
+        for choice in self.choices.all():
+            if choice.num_value is None:
+                return True
+        return False
+    
     def __str__(self):
         return self.name
 
@@ -27,6 +56,7 @@ class ChoiceList(models.Model):
 class Choice(models.Model):
     choice_list = models.ForeignKey(ChoiceList, on_delete=models.CASCADE, related_name='choices')
     name = models.CharField(max_length=500)
+    num_value = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return 'Choice <{n}> (Choice List <{l}>)'.format(l=self.choice_list.name, n=self.name)
@@ -86,7 +116,7 @@ class MapSurveyQuestion(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='surveys')
     sort_order = models.IntegerField(blank=True, null=True)
-
+    
     def __str__(self):
         return '{} ! {}'.format(self.survey.name, self.question.name)
         
@@ -125,7 +155,7 @@ class MapUserSurvey(models.Model):
     time_end = models.DateTimeField(null=True, blank=True)
     time_visit = models.DateTimeField(null=True, blank=True)
     random_letters = models.CharField(max_length=5, null=True, blank=True)
-
+    
     def generate_random_letters(self):
         letters = 'qwertyuiopasdfghjklzxcvbnm'
         result = ''
@@ -149,3 +179,4 @@ class Answer(models.Model):
     survey_instance = models.ForeignKey(MapUserSurvey, on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     data = models.CharField(max_length=2000, blank=True, null=True)
+    data_num = models.CharField(max_length=100, blank=True, null=True)

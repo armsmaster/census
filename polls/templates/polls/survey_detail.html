@@ -7,7 +7,7 @@
         <div class="col-md-12" style="padding: 0px;">
             <h1>[Survey] <u>{{ object.name }}</u></h1>
             <blockquote class="blockquote">{{ object.description }}</blockquote>
-            <p><a href="/polls/survey-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
+            <p><a href="/survey-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
         </div>
         <!--
         <div class="col-md-4" style="padding: 0px;">
@@ -26,6 +26,19 @@
         </div>
         -->
     </div>
+	
+	{% if object.errors %}
+	<div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+			<h2>Errors</h2>
+			<ul class="list-group">
+				{% for e in object.errors %}
+				<li class="list-group-item list-group-item-danger">{{e|safe}}</li>
+				{% endfor %}
+			</ul>
+        </div>
+    </div>
+	{% endif %}
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
@@ -53,8 +66,8 @@
                     <td>{{ i.sort_order }} ({{ i.id }})</td>
                     <td>{{ i.question.name }}</td>
                     <td>{{ i.question.data_type }}</td>
-                    <td class="technical-links"><a href="/polls/question-details/{{ i.question.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/polls/survey-question-delete/{{ i.id }}/">Delete from Survey</a></td>
+                    <td class="technical-links"><a href="/question-details/{{ i.question.id }}/">Details</a></td>
+                    <td class="technical-links"><a href="/survey-question-delete/{{ i.id }}/">Delete from Survey</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -67,7 +80,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h2>Persons Assigned</h2>
-            <p><a href="/polls/survey-update/{{ object.id }}/add-person" class="btn btn-secondary">Add Person</a></p>
+            <p><a href="/survey-update/{{ object.id }}/add-person" class="btn btn-secondary">Add Person</a></p>
             {% if object.persons.all %}
             <table id="map-survey-person-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
@@ -91,8 +104,8 @@
                     <td>{{ i.time_visit|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ i.time_start|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ i.time_end|date:"d.m.Y H:i:s" }}</td>
-                    <td><a href="/polls/survey/{{ i.id }}/{{ i.random_letters }}/">Link</a></td>
-                    <td class="technical-links"><a href="/polls/survey-person-delete/{{ i.id }}/">Delete</a></td>
+                    <td><a href="/survey/{{ i.id }}/{{ i.random_letters }}/">Link</a></td>
+                    <td class="technical-links"><a href="/survey-person-delete/{{ i.id }}/">Delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -105,13 +118,14 @@
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h2>Answers</h2>
-			<p><a href="/polls/survey-details/{{ object.id }}/export-answers/" class="btn btn-success">Export to XLSX</a></p>
+			<p><a href="/survey-details/{{ object.id }}/export-answers/" class="btn btn-success">Export to XLSX</a></p>
             <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
 					<tr>
 						<th style="width: 25%">Person</th>
 						<th style="width: 25%">Question</th>
 						<th style="width: 50%">Answer</th>
+						<th style="width: 50%">Answer (Numeric)</th>
 					</tr>
 				</thead>
                 <tbody>
@@ -120,6 +134,7 @@
                     <td>{{ i.survey_instance.person }}</td>
                     <td>{{ i.question }}</td>
                     <td>{{ i.data }}</td>
+					<td>{{ i.data_num }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>

@@ -6,7 +6,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h1>[Choice List] <u>{{ object.name }}</u></h1>
-            <p><a href="/polls/choice-list-update/{{ object.id }}" class="btn btn-secondary">Rename</a></p>
+            <p><a href="/choice-list-update/{{ object.id }}" class="btn btn-secondary">Rename</a></p>
         </div>
     </div>
 
@@ -27,6 +27,7 @@
                 <thead class="thead-dark">
                     <th>Id</th>
                     <th>Name</th>
+					<th>Numeric Value</th>
                     <th></th>
                     <th></th>
                 </thead>
@@ -35,8 +36,9 @@
                 <tr class="parent">
                     <td>{{ i.id }}</td>
                     <td>{{ i.name }}</td>
-                    <td class="technical-links"><a href="/polls/choice-update/{{ i.id }}/">Rename</a></td>
-                    <td class="technical-links"><a href="/polls/choice-delete/{{ i.id }}/">Delete</a></td>
+					<td{% if i.num_value is None %} class="table-danger"{% endif %}>{{ i.num_value }}</td>
+                    <td class="technical-links"><a href="/choice-update/{{ i.id }}/">Edit</a></td>
+                    <td class="technical-links"><a href="/choice-delete/{{ i.id }}/">Delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

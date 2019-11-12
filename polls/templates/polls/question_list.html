@@ -5,7 +5,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
             <h1>Questions</h1>
-            <p><a href="/polls/question/create/" class="btn btn-secondary">Create New</a></p>
+            <p><a href="/question/create/" class="btn btn-secondary">Create New</a></p>
             <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
                     <th>Name</th>
@@ -19,9 +19,9 @@
                 <tr class="parent">
                     <td>{{ i.name }}</td>
                     <td>{{ i.data_type_name }}</td>
-                    <td class="technical-links"><a href="/polls/question-details/{{ i.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/polls/question-update/{{ i.id }}/">Edit</a></td>
-                    <td class="technical-links">{% if i.can_delete %}<a href="/polls/question-delete/{{ i.id }}/">Delete</a>{% endif %}</td>
+                    <td class="technical-links"><a href="/question-details/{{ i.id }}/">Details</a></td>
+                    <td class="technical-links"><a href="/question-update/{{ i.id }}/">Edit</a></td>
+                    <td class="technical-links">{% if i.can_delete %}<a href="/question-delete/{{ i.id }}/">Delete</a>{% endif %}</td>
                 </tr>
                 {% endfor %}
                 </tbody>

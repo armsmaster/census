@@ -5,7 +5,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
             <h1>Choice Lists</h1>
-            <p><a href="/polls/choice-list/create/" class="btn btn-secondary">Create New</a></p>
+            <p><a href="/choice-list/create/" class="btn btn-secondary">Create New</a></p>
             <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
                     <th>Name</th>
@@ -15,11 +15,11 @@
                 </thead>
                 <tbody>
                 {% for i in items %}
-                <tr class="parent">
+                <tr {% if i.has_undef_numeric_values %}class="table-danger"{% endif %}>
                     <td>{{ i.name }}</td>
-                    <td class="technical-links"><a href="/polls/choice-list-details/{{ i.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/polls/choice-list-update/{{ i.id }}/">Rename</a></td>
-                    <td class="technical-links"><a href="/polls/choice-list-delete/{{ i.id }}/">Delete</a></td>
+                    <td class="technical-links"><a href="/choice-list-details/{{ i.id }}/">Details</a></td>
+                    <td class="technical-links"><a href="/choice-list-update/{{ i.id }}/">Rename</a></td>
+                    <td class="technical-links"><a href="/choice-list-delete/{{ i.id }}/">Delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

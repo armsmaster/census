@@ -87,7 +87,7 @@ class Choice_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/polls/login/'
     redirect_field_name = 'next'
     model = models.Choice
-    fields = ['name']
+    fields = ['name', 'num_value']
     template_name = 'polls/choice_update.html'
 
     def get_success_url(self):
@@ -194,8 +194,8 @@ class Survey_Detail(LoginRequiredMixin, generic.DetailView, generic.FormView):
 
     def get_success_url(self):
         object = self.get_object()
-        return '/polls/survey-details/{}/'.format(object.id)
-
+        return '/survey-details/{}/'.format(object.id)
+    
     def post(self, request, *args, **kwargs):
         # self.object = self.get_object()
         form = self.get_form()
@@ -212,7 +212,7 @@ class Survey_Detail(LoginRequiredMixin, generic.DetailView, generic.FormView):
 
 
 class Survey_Detail_Add_Person(LoginRequiredMixin, generic.DetailView, generic.FormView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
     template_name = 'polls/survey_detail_add_person.html'
@@ -220,8 +220,8 @@ class Survey_Detail_Add_Person(LoginRequiredMixin, generic.DetailView, generic.F
 
     def get_success_url(self):
         object = self.get_object()
-        return '/polls/survey-details/{}/'.format(object.id)
-
+        return '/survey-details/{}/'.format(object.id)
+    
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
@@ -237,7 +237,7 @@ class Survey_Detail_Add_Person(LoginRequiredMixin, generic.DetailView, generic.F
 
 
 class Survey_Create(LoginRequiredMixin, generic.edit.CreateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
     fields = ['name', 'description']
@@ -426,9 +426,11 @@ def survey_step(request, **kwargs):
     if request.method == "POST":
         ok_to_go = False
         data_result = None
+        data_result_num = None
         if q_current.question.data_type == models.Question.MSMC:
             choices = [(c.id, c.name) for c in q_current.question.choice_list.choices.all()]
             choices_dict = { str(c.id): c.name for c in q_current.question.choice_list.choices.all()}
+            choices_dict_num = { str(c.id): c.num_value for c in q_current.question.choice_list.choices.all()}
             form = forms.MSMC(choices, request.POST)
             # form.fields['data'].choices = choices
             # print('xxxxxx MSMC')
@@ -437,10 +439,13 @@ def survey_step(request, **kwargs):
                 ok_to_go = True
                 x = '|||'.join([choices_dict[i] for i in form.cleaned_data['data']])
                 data_result = x
+                x_num = ';'.join([str(choices_dict_num[i]) for i in form.cleaned_data['data']])
+                data_result_num = x_num
             
         if q_current.question.data_type == models.Question.SSMC:
             choices = [(c.id, c.name) for c in q_current.question.choice_list.choices.all()]
             choices_dict = { str(c.id): c.name for c in q_current.question.choice_list.choices.all()}
+            choices_dict_num = { str(c.id): c.num_value for c in q_current.question.choice_list.choices.all()}
             form = forms.SSMC(choices, request.POST)
             # print(form)
             # form.fields['data'].choices = choices_x
@@ -455,6 +460,7 @@ def survey_step(request, **kwargs):
                 # print('SSMC', form.cleaned_data['data'])
                 ok_to_go = True
                 data_result = choices_dict[form.cleaned_data['data']]
+                data_result_num = str(choices_dict_num[form.cleaned_data['data']])
         
         if q_current.question.data_type == models.Question.NUMBER_RANGE:
             form = forms.NumRange(request.POST)
@@ -462,6 +468,7 @@ def survey_step(request, **kwargs):
                 # print('NUMBER_RANGE', form.cleaned_data['data'])
                 ok_to_go = True
                 data_result = form.cleaned_data['data']
+                data_result_num = data_result
                 
         if q_current.question.data_type == models.Question.NUMBER:
             form = forms.Numeric(request.POST)
@@ -469,6 +476,7 @@ def survey_step(request, **kwargs):
                 # print('NUMBER', form.cleaned_data['data'])
                 ok_to_go = True
                 data_result = form.cleaned_data['data']
+                data_result_num = data_result
         
         if q_current.question.data_type == models.Question.TEXT:
             form = forms.Txt(request.POST)
@@ -490,6 +498,7 @@ def survey_step(request, **kwargs):
         if not a:
             a = models.Answer(survey_instance=surv, question=q_current.question)
         a.data = data_result
+        a.data_num = data_result_num
         a.save()
         
         if next_q:

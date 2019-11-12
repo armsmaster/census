@@ -6,7 +6,7 @@ class Choice_Form(forms.ModelForm):
 
     class Meta:
         model = models.Choice
-        fields = ('name',)
+        fields = ('name', 'num_value')
 
 
 class MapSurveyQuestion_Form(forms.ModelForm):

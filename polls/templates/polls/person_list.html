@@ -5,7 +5,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
             <h1>Persons</h1>
-            <p><a href="/polls/person/create/" class="btn btn-secondary">Create New</a></p>
+            <p><a href="/person/create/" class="btn btn-secondary">Create New</a></p>
             <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
                     <th>Email</th>
@@ -23,9 +23,9 @@
                     <td>{{ i.name_first }}</td>
                     <td>{{ i.name_second }}</td>
                     <td>{{ i.name_last }}</td>
-                    <td class="technical-links"><a href="/polls/person-details/{{ i.id }}">Details</a></td>
-                    <td class="technical-links"><a href="/polls/person-update/{{ i.id }}">Edit</a></td>
-                    <td class="technical-links"><a href="/polls/person-delete/{{ i.id }}">Delete</a></td>
+                    <td class="technical-links"><a href="/person-details/{{ i.id }}">Details</a></td>
+                    <td class="technical-links"><a href="/person-update/{{ i.id }}">Edit</a></td>
+                    <td class="technical-links"><a href="/person-delete/{{ i.id }}">Delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
