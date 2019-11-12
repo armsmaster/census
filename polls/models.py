@@ -117,6 +117,9 @@ class MapSurveyQuestion(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='surveys')
     sort_order = models.IntegerField(blank=True, null=True)
     
+    class Meta:
+        unique_together = ('survey', 'question',)
+    
     def __str__(self):
         return '{} ! {}'.format(self.survey.name, self.question.name)
         
