@@ -20,17 +20,33 @@ class Survey(models.Model):
     def errors(self):
         output = []
         questions = []
+        questions_with_cond = []
         for msq in self.questions.all():
             q = msq.question
             q_string = '<{}>'.format(q)
             if msq.condition_question:
                 q_string += '. Condition Question: <{cq}> (Answer: <{ca}>)'.format(cq=msq.condition_question, ca=msq.condition_answer)
-            if q_string not in questions:
-                questions.append(q_string)
+                if q_string not in questions_with_cond:
+                    questions_with_cond.append(q_string)
+                else:
+                    err = 'Duplicate Question <b>{}</b>'.format(q_string)
+                    if err not in output:
+                        output.append(err)
+                if '<{}>'.format(q) in questions:
+                    err = 'Duplicate Question <b>{}</b>'.format(q)
+                    if err not in output:
+                        output.append(err)
             else:
-                err = 'Duplicate Question <b>{}</b>'.format(q_string)
-                if err not in output:
-                    output.append(err)
+                if q_string not in questions:
+                    questions.append(q_string)
+                else:
+                    err = 'Duplicate Question <b>{}</b>'.format(q_string)
+                    if err not in output:
+                        output.append(err)
+                if sum([1 for x in questions_with_cond if q_string in x]) > 0:
+                    err = 'Duplicate Question <b>{}</b>'.format(q_string)
+                    if err not in output:
+                        output.append(err)
         persons = []
         for msp in self.persons.all():
             p = msp.person
