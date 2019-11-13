@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-4" style="padding: 0px;">
             <h2>Information</h2>
-            <p><a href="/polls/person-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
+            <p><a href="/person-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
             <table class="table table-hover">
                 <tr>
                     <th style="padding: 1px;">ID</th>
@@ -63,9 +63,9 @@
                 {% for i in object.surveys.all %}
                 <tr class="parent">
                     <td>{{ i.survey.name }}</td>
-                    <td class="technical-links"><a href="/polls/survey-details/{{ i.survey.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/polls/survey-update/{{ i.survey.id }}/">Edit</a></td>
-                    <td class="technical-links"><a href="/polls/survey-delete/{{ i.survey.id }}/">Delete</a></td>
+                    <td class="technical-links"><a href="/survey-details/{{ i.survey.id }}/">Details</a></td>
+                    <td class="technical-links"><a href="/survey-update/{{ i.survey.id }}/">Edit</a></td>
+                    <td class="technical-links"><a href="/survey-delete/{{ i.survey.id }}/">Delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

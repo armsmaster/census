@@ -16,6 +16,14 @@ class MapSurveyQuestion_Form(forms.ModelForm):
         fields = ('question',)
 
 
+# not used yet
+class MapSurveyQuestion_Condition_Form(forms.ModelForm):
+
+    class Meta:
+        model = models.MapSurveyQuestion
+        fields = ('condition_question', 'condition_answer',)
+
+
 class MapUserSurvey_Form(forms.ModelForm):
 
     class Meta:

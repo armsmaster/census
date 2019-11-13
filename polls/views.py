@@ -268,6 +268,24 @@ class Survey_Delete(LoginRequiredMixin, generic.DeleteView):
         return reverse('polls:survey-list')
 
 
+class Survey_Question_Detail(LoginRequiredMixin, generic.DetailView):
+    login_url = '/polls/login/'
+    redirect_field_name = 'next'
+    model = models.MapSurveyQuestion
+    template_name = 'polls/survey_question_detail.html'
+
+
+class Survey_Question_Update(LoginRequiredMixin, generic.UpdateView):
+    login_url = '/polls/login/'
+    redirect_field_name = 'next'
+    model = models.MapSurveyQuestion
+    fields = ['condition_question', 'condition_answer',]
+    template_name = 'polls/survey_question_update.html'
+
+    def get_success_url(self):
+        return reverse('polls:survey-question-detail', kwargs={'pk': self.object.pk})
+
+
 class Survey_Question_Delete(LoginRequiredMixin, generic.DeleteView):
     login_url = '/polls/login/'
     redirect_field_name = 'next'
@@ -421,7 +439,22 @@ def survey_step(request, **kwargs):
     else:
         next_q = all_q_next[0]
     
-    choices_x = (('a', 'a'), ('b', 'b'))
+    if q_current.has_condition():
+        cond_q = q_current.condition_question
+        cond_a = q_current.condition_answer
+        cond_ok = True
+        existing_a = models.Answer.objects.filter(survey_instance=surv, question=cond_q.question).first()
+        if not existing_a:
+            cond_ok = False
+        else:
+            if existing_a.data != cond_a:
+                cond_ok = False
+        if not cond_ok:
+            if next_q:
+                return HttpResponseRedirect(reverse('polls:survey-step', kwargs={'id': surv.pk, 'secret': surv.random_letters, 'q': next_q.pk}))
+            else:
+                return HttpResponseRedirect(reverse('polls:survey-end', kwargs={'id': surv.pk, 'secret': surv.random_letters}))
+        
     
     if request.method == "POST":
         ok_to_go = False

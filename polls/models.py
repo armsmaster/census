@@ -117,11 +117,17 @@ class MapSurveyQuestion(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='surveys')
     sort_order = models.IntegerField(blank=True, null=True)
     
+    condition_question = models.ForeignKey('MapSurveyQuestion', on_delete=models.CASCADE, related_name='following', blank=True, null=True)
+    condition_answer = models.CharField(max_length=2000, default='', blank=True, null=True)
+    
     def __str__(self):
         return '{} ! {}'.format(self.survey.name, self.question.name)
         
     def answers(self):
         return self.question.answers.all().filter(survey_instance__survey=self.survey)
+    
+    def has_condition(self):
+        return self.condition_question is not None
 
 
 class Person(models.Model):
@@ -129,8 +135,8 @@ class Person(models.Model):
     SEX_M = 'M'
     SEX_F = 'F'
     SEX_CHOICES = (
-        (SEX_M, 'М'),
-        (SEX_F, 'Ж'),
+        (SEX_M, 'Male'),
+        (SEX_F, 'Female'),
     )
 
     email = models.CharField(max_length=200)

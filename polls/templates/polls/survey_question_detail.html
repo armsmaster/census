@@ -1,0 +1,103 @@
+{% extends 'polls/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Information</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th style="padding: 1px;">ID</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.id }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Survey</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.survey.name }}</td>
+                </tr>
+				<tr>
+                    <th style="padding: 1px;">Question</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.question.name }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Data Type</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.question.data_type_name }}</td>
+                </tr>
+                {% if object.question.data_type == object.question.NUMBER_RANGE %}
+                <tr>
+                    <th style="padding: 1px;">Range Minimum</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.question.range_min }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Range Maximum</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.question.range_max }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Range Step</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.question.range_step }}</td>
+                </tr>
+                {% endif %}
+            </table>
+
+        </div>
+    </div>
+	
+	{% if object.condition_question %}
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Условие для выведения вопроса</h2>
+            <table class="table table-hover table-warning">
+                <tr>
+                    <th style="padding: 1px;">Question</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.condition_question }}</td>
+                </tr>
+                <tr>
+                    <th style="padding: 1px;">Answer</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.condition_answer }}</td>
+                </tr>
+			</table>
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <p><a href="/survey-question-update/{{ object.id }}/" class="btn btn-secondary">Change/Remove Condition</a></p>
+        </div>
+    </div>
+    {% else %}
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <p><a href="/survey-question-update/{{ object.id }}/" class="btn btn-secondary">Create Condition</a></p>
+        </div>
+    </div>
+    {% endif %}
+
+	{% if object.answers.all %}
+	<div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h2>Answers</h2>
+            <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
+					<tr>
+						<th style="width: 20%">Person</th>
+						<th style="width: 20%">Survey</th>
+						<th style="width: 45%">Answer</th>
+						<th style="width: 15%">Answer (Numeric)</th>
+					</tr>
+				</thead>
+                <tbody>
+                {% for i in object.answers.all %}
+                <tr class="parent">
+                    <td>{{ i.survey_instance.person }}</td>
+                    <td>{{ i.survey_instance.survey }}</td>
+                    <td>{{ i.data }}</td>
+					<td>{{ i.data_num }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+	{% endif %}
+	
+</div>
+{% endblock %}
