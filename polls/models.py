@@ -22,10 +22,13 @@ class Survey(models.Model):
         questions = []
         for msq in self.questions.all():
             q = msq.question
-            if q not in questions:
-                questions.append(q)
+            q_string = '<{}>'.format(q)
+            if msq.condition_question:
+                q_string += '. Condition Question: <{cq}> (Answer: <{ca}>)'.format(cq=msq.condition_question, ca=msq.condition_answer)
+            if q_string not in questions:
+                questions.append(q_string)
             else:
-                err = 'Duplicate Question <b>{}</b>'.format(q.name)
+                err = 'Duplicate Question <b>{}</b>'.format(q_string)
                 if err not in output:
                     output.append(err)
         persons = []
