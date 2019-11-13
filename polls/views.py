@@ -11,7 +11,7 @@ from . import forms
 
 
 class ChoiceList_List(LoginRequiredMixin, generic.ListView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
     template_name = 'polls/choice_list_list.html'
@@ -19,7 +19,7 @@ class ChoiceList_List(LoginRequiredMixin, generic.ListView):
 
 
 class ChoiceList_Detail(LoginRequiredMixin, generic.DetailView, generic.FormView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
     template_name = 'polls/choice_list_detail.html'
@@ -45,7 +45,7 @@ class ChoiceList_Detail(LoginRequiredMixin, generic.DetailView, generic.FormView
 
 
 class ChoiceList_Create(LoginRequiredMixin, generic.edit.CreateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
     fields = ['name']
@@ -56,7 +56,7 @@ class ChoiceList_Create(LoginRequiredMixin, generic.edit.CreateView):
 
 
 class ChoiceList_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
     fields = ['name']
@@ -67,7 +67,7 @@ class ChoiceList_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class ChoiceList_Delete(LoginRequiredMixin, generic.DeleteView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
     template_name = 'polls/choice_list_confirm_delete.html'
@@ -84,7 +84,7 @@ class ChoiceList_Delete(LoginRequiredMixin, generic.DeleteView):
 
 
 class Choice_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Choice
     fields = ['name', 'num_value']
@@ -95,7 +95,7 @@ class Choice_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class Choice_Delete(LoginRequiredMixin, generic.DeleteView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Choice
     template_name = 'polls/choice_confirm_delete.html'
@@ -105,7 +105,7 @@ class Choice_Delete(LoginRequiredMixin, generic.DeleteView):
 
 
 class Question_List(LoginRequiredMixin, generic.ListView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
     template_name = 'polls/question_list.html'
@@ -113,14 +113,14 @@ class Question_List(LoginRequiredMixin, generic.ListView):
 
 
 class Question_Detail(LoginRequiredMixin, generic.DetailView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
     template_name = 'polls/question_detail.html'
 
 
 class Question_Create(LoginRequiredMixin, generic.edit.CreateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
     fields = ['name', 'text', 'data_type']
@@ -131,7 +131,7 @@ class Question_Create(LoginRequiredMixin, generic.edit.CreateView):
 
 
 class Question_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
     fields = ['name', 'text', 'data_type']
@@ -156,7 +156,7 @@ class Question_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class Question_ChoiceList_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
     fields = ['choice_list']
@@ -167,7 +167,7 @@ class Question_ChoiceList_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class Question_Range_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
     fields = ['range_min', 'range_max', 'range_step']
@@ -178,7 +178,7 @@ class Question_Range_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class Survey_List(LoginRequiredMixin, generic.ListView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
     template_name = 'polls/survey_list.html'
@@ -186,7 +186,7 @@ class Survey_List(LoginRequiredMixin, generic.ListView):
 
 
 class Survey_Detail(LoginRequiredMixin, generic.DetailView, generic.FormView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
     template_name = 'polls/survey_detail.html'
@@ -248,7 +248,7 @@ class Survey_Create(LoginRequiredMixin, generic.edit.CreateView):
 
 
 class Survey_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
     fields = ['name', 'description']
@@ -259,7 +259,7 @@ class Survey_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class Survey_Delete(LoginRequiredMixin, generic.DeleteView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
     template_name = 'polls/survey_confirm_delete.html'
@@ -269,14 +269,14 @@ class Survey_Delete(LoginRequiredMixin, generic.DeleteView):
 
 
 class Survey_Question_Detail(LoginRequiredMixin, generic.DetailView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.MapSurveyQuestion
     template_name = 'polls/survey_question_detail.html'
 
 
 class Survey_Question_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.MapSurveyQuestion
     fields = ['condition_question', 'condition_answer',]
@@ -287,7 +287,7 @@ class Survey_Question_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class Survey_Question_Delete(LoginRequiredMixin, generic.DeleteView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.MapSurveyQuestion
     template_name = 'polls/survey_question_confirm_delete.html'
@@ -304,7 +304,7 @@ class Survey_Question_Delete(LoginRequiredMixin, generic.DeleteView):
 
 
 class Survey_Person_Delete(LoginRequiredMixin, generic.DeleteView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.MapUserSurvey
     template_name = 'polls/survey_person_confirm_delete.html'
@@ -314,7 +314,7 @@ class Survey_Person_Delete(LoginRequiredMixin, generic.DeleteView):
 
 
 class Person_List(LoginRequiredMixin, generic.ListView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Person
     template_name = 'polls/person_list.html'
@@ -322,14 +322,14 @@ class Person_List(LoginRequiredMixin, generic.ListView):
 
 
 class Person_Detail(LoginRequiredMixin, generic.DetailView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Person
     template_name = 'polls/person_detail.html'
 
 
 class Person_Create(LoginRequiredMixin, generic.edit.CreateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Person
     fields = ['email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title']
@@ -340,7 +340,7 @@ class Person_Create(LoginRequiredMixin, generic.edit.CreateView):
 
 
 class Person_Update(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Person
     fields = ['email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title']
@@ -351,7 +351,7 @@ class Person_Update(LoginRequiredMixin, generic.UpdateView):
 
 
 class Person_Delete(LoginRequiredMixin, generic.DeleteView):
-    login_url = '/polls/login/'
+    login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Person
     template_name = 'polls/person_confirm_delete.html'
