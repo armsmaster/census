@@ -139,6 +139,8 @@ class MapSurveyQuestion(models.Model):
     condition_question = models.ForeignKey('MapSurveyQuestion', on_delete=models.CASCADE, related_name='following', blank=True, null=True)
     condition_answer = models.CharField(max_length=2000, default='', blank=True, null=True)
     
+    is_mandatory = models.BooleanField(default=True)
+    
     def __str__(self):
         return '{} ! {}'.format(self.survey.name, self.question.name)
         

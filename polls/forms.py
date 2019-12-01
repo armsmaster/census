@@ -37,7 +37,7 @@ class MSMC(forms.Form):
         super(MSMC, self).__init__(*args, **kwargs)
         self.fields['data'].choices = data_choices
     
-    data = forms.MultipleChoiceField(required=True, widget=forms.CheckboxSelectMultiple)
+    data = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple)
 
 
 class SSMC(forms.Form):
@@ -46,19 +46,19 @@ class SSMC(forms.Form):
         super(SSMC, self).__init__(*args, **kwargs)
         self.fields['data'].choices = data_choices
     
-    data = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=[])
+    data = forms.ChoiceField(required=False, widget=forms.RadioSelect, choices=[])
 
 
 class NumRange(forms.Form):
     
-    data = forms.IntegerField(required=True, widget=forms.HiddenInput)
+    data = forms.IntegerField(required=False, widget=forms.HiddenInput)
 
 
 class Numeric(forms.Form):
     
-    data = forms.DecimalField(required=True)
+    data = forms.DecimalField(required=False)
 
 
 class Txt(forms.Form):
     
-    data = forms.CharField(required=True, max_length=2000, widget=forms.Textarea)
+    data = forms.CharField(required=False, max_length=2000, widget=forms.Textarea)

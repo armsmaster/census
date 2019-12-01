@@ -65,7 +65,7 @@
                 {% for i in object.questions.all %}
                 <tr class="parent">
                     <td>{{ i.sort_order }} ({{ i.id }})</td>
-                    <td>{{ i.question.name }}</td>
+                    <td>{{ i.question.name }}{%if not i.is_mandatory %} <b>[не обязательный]</b>{% endif %}</td>
                     <td>{% if i.has_condition %}<b>Yes</b>{% else %}No{% endif %}</td>
 					<td>{{ i.question.data_type }}</td>
                     <td class="technical-links"><a href="/survey-question/{{ i.id }}/">Details</a></td>

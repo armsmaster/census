@@ -30,6 +30,7 @@ urlpatterns = [
     path('survey-delete/<int:pk>/', views.Survey_Delete.as_view(), name='survey-delete'),
     path('survey-question/<int:pk>/', views.Survey_Question_Detail.as_view(), name='survey-question-detail'),
     path('survey-question-update/<int:pk>/', views.Survey_Question_Update.as_view(), name='survey-question-update'),
+    path('survey-question-update-mandatory/<int:pk>/', views.Survey_Question_Update_Mandatory.as_view(), name='survey-question-update-mandatory'),
     path('survey-question-delete/<int:pk>/', views.Survey_Question_Delete.as_view(), name='survey-question-delete'),
     path('survey-person-delete/<int:pk>/', views.Survey_Person_Delete.as_view(), name='survey-person-delete'),
     path('person/', views.Person_List.as_view(), name='person-list'),

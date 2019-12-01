@@ -19,6 +19,10 @@
                     <th style="padding: 1px;">Question</th>
                     <td style="padding: 1px;text-align: right;">{{ object.question.name }}</td>
                 </tr>
+				<tr>
+                    <th style="padding: 1px;">Is Mandatory (вопрос обязательный)</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.is_mandatory }}</td>
+                </tr>
                 <tr>
                     <th style="padding: 1px;">Data Type</th>
                     <td style="padding: 1px;text-align: right;">{{ object.question.data_type_name }}</td>
@@ -38,10 +42,14 @@
                 </tr>
                 {% endif %}
             </table>
-
+			
         </div>
     </div>
-	
+	<div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <p><a href="/survey-question-update-mandatory/{{ object.id }}/" class="btn btn-secondary">Сделать вопрос необязательным / обязательным</a></p>
+        </div>
+    </div>
 	{% if object.condition_question %}
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">

@@ -286,6 +286,17 @@ class Survey_Question_Update(LoginRequiredMixin, generic.UpdateView):
         return reverse('polls:survey-question-detail', kwargs={'pk': self.object.pk})
 
 
+class Survey_Question_Update_Mandatory(LoginRequiredMixin, generic.UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+    model = models.MapSurveyQuestion
+    fields = ['is_mandatory',]
+    template_name = 'polls/survey_question_update.html'
+
+    def get_success_url(self):
+        return reverse('polls:survey-question-detail', kwargs={'pk': self.object.pk})
+
+
 class Survey_Question_Delete(LoginRequiredMixin, generic.DeleteView):
     login_url = '/login/'
     redirect_field_name = 'next'
@@ -469,11 +480,17 @@ def survey_step(request, **kwargs):
             # print('xxxxxx MSMC')
             if form.is_valid():
                 # print('MSMC', form.cleaned_data['data'])
-                ok_to_go = True
-                x = '|||'.join([choices_dict[i] for i in form.cleaned_data['data']])
-                data_result = x
-                x_num = ';'.join([str(choices_dict_num[i]) for i in form.cleaned_data['data']])
-                data_result_num = x_num
+                if form.cleaned_data['data'] == []:
+                    if q_current.is_mandatory:
+                        pass
+                    else:
+                        ok_to_go = True
+                else:
+                    ok_to_go = True
+                    x = '|||'.join([choices_dict[i] for i in form.cleaned_data['data']])
+                    data_result = x
+                    x_num = ';'.join([str(choices_dict_num[i]) for i in form.cleaned_data['data']])
+                    data_result_num = x_num
             
         if q_current.question.data_type == models.Question.SSMC:
             choices = [(c.id, c.name) for c in q_current.question.choice_list.choices.all()]
@@ -491,32 +508,56 @@ def survey_step(request, **kwargs):
             #     print(k, ',', v, ',', isinstance(v, (list, tuple)))
             if form.is_valid():
                 # print('SSMC', form.cleaned_data['data'])
-                ok_to_go = True
-                data_result = choices_dict[form.cleaned_data['data']]
-                data_result_num = str(choices_dict_num[form.cleaned_data['data']])
+                if form.cleaned_data['data'] == '':
+                    if q_current.is_mandatory:
+                        pass
+                    else:
+                        ok_to_go = True
+                else:
+                    ok_to_go = True
+                    data_result = choices_dict[form.cleaned_data['data']]
+                    data_result_num = str(choices_dict_num[form.cleaned_data['data']])
         
         if q_current.question.data_type == models.Question.NUMBER_RANGE:
             form = forms.NumRange(request.POST)
             if form.is_valid():
                 # print('NUMBER_RANGE', form.cleaned_data['data'])
-                ok_to_go = True
-                data_result = form.cleaned_data['data']
-                data_result_num = data_result
+                if form.cleaned_data['data'] is None:
+                    if q_current.is_mandatory:
+                        pass
+                    else:
+                        ok_to_go = True
+                else:
+                    ok_to_go = True
+                    data_result = form.cleaned_data['data']
+                    data_result_num = data_result
                 
         if q_current.question.data_type == models.Question.NUMBER:
             form = forms.Numeric(request.POST)
             if form.is_valid():
                 # print('NUMBER', form.cleaned_data['data'])
-                ok_to_go = True
-                data_result = form.cleaned_data['data']
-                data_result_num = data_result
+                if form.cleaned_data['data'] is None:
+                    if q_current.is_mandatory:
+                        pass
+                    else:
+                        ok_to_go = True
+                else:
+                    ok_to_go = True
+                    data_result = form.cleaned_data['data']
+                    data_result_num = data_result
         
         if q_current.question.data_type == models.Question.TEXT:
             form = forms.Txt(request.POST)
             if form.is_valid():
                 # print('TEXT', form.cleaned_data['data'])
-                ok_to_go = True
-                data_result = form.cleaned_data['data']
+                if form.cleaned_data['data'] == '':
+                    if q_current.is_mandatory:
+                        pass
+                    else:
+                        ok_to_go = True
+                else:
+                    ok_to_go = True
+                    data_result = form.cleaned_data['data']
         
         print('###')
         print('q_current.question.data_type =', q_current.question.data_type)
@@ -629,6 +670,7 @@ def export_answers_to_xlsx(request, **kwargs):
         'question_id',
         'question_name',
         'answer',
+        'answer_num',
     ]
     
     row_num = 1
@@ -646,6 +688,7 @@ def export_answers_to_xlsx(request, **kwargs):
         worksheet.cell(row=row_num, column=5).value = a.question.id
         worksheet.cell(row=row_num, column=6).value = a.question.name
         worksheet.cell(row=row_num, column=7).value = a.data
+        worksheet.cell(row=row_num, column=8).value = a.data_num
     
     workbook.save(response)
     return response
