@@ -27,7 +27,7 @@ class ChoiceList_Detail(LoginRequiredMixin, generic.DetailView, generic.FormView
 
     def get_success_url(self):
         object = self.get_object()
-        return '/polls/choice-list-details/{}/'.format(object.id)
+        return reverse('polls:choice-list-detail', kwargs={'pk': object.pk})
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -48,7 +48,8 @@ class ChoiceList_Create(LoginRequiredMixin, generic.edit.CreateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
-    fields = ['name']
+    # fields = ['name']
+    form_class = forms.ChoiceList
     template_name = 'polls/choice_list_create.html'
 
     def get_success_url(self):
@@ -59,7 +60,8 @@ class ChoiceList_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
-    fields = ['name']
+    # fields = ['name']
+    form_class = forms.ChoiceList
     template_name = 'polls/choice_list_update.html'
 
     def get_success_url(self):
@@ -87,7 +89,8 @@ class Choice_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Choice
-    fields = ['name', 'num_value']
+    # fields = ['name', 'num_value']
+    form_class = forms.Choice_Form
     template_name = 'polls/choice_update.html'
 
     def get_success_url(self):
@@ -123,7 +126,8 @@ class Question_Create(LoginRequiredMixin, generic.edit.CreateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
-    fields = ['name', 'text', 'data_type']
+    # fields = ['name', 'text', 'data_type']
+    form_class = forms.Question
     template_name = 'polls/question_create.html'
 
     def get_success_url(self):
@@ -134,7 +138,8 @@ class Question_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
-    fields = ['name', 'text', 'data_type']
+    # fields = ['name', 'text', 'data_type']
+    form_class = forms.Question
     template_name = 'polls/question_update.html'
 
     def get_success_url(self):
@@ -159,7 +164,8 @@ class Question_ChoiceList_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
-    fields = ['choice_list']
+    # fields = ['choice_list']
+    form_class = forms.Question_ChoiceList
     template_name = 'polls/question_update.html'
 
     def get_success_url(self):
@@ -170,11 +176,22 @@ class Question_Range_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
-    fields = ['range_min', 'range_max', 'range_step']
+    # fields = ['range_min', 'range_max', 'range_step']
+    form_class = forms.Question_Range
     template_name = 'polls/question_update.html'
 
     def get_success_url(self):
         return reverse('polls:question-detail', kwargs={'pk': self.object.pk})
+
+
+class Question_Delete(LoginRequiredMixin, generic.DeleteView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+    model = models.Question
+    template_name = 'polls/question_confirm_delete.html'
+    
+    def get_success_url(self):
+        return reverse('polls:question-list')
 
 
 class Survey_List(LoginRequiredMixin, generic.ListView):
@@ -240,7 +257,8 @@ class Survey_Create(LoginRequiredMixin, generic.edit.CreateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
-    fields = ['name', 'description']
+    # fields = ['name', 'description']
+    form_class = forms.Survey
     template_name = 'polls/survey_create.html'
 
     def get_success_url(self):
@@ -251,7 +269,8 @@ class Survey_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Survey
-    fields = ['name', 'description']
+    # fields = ['name', 'description']
+    form_class = forms.Survey
     template_name = 'polls/survey_update.html'
 
     def get_success_url(self):
@@ -279,7 +298,8 @@ class Survey_Question_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.MapSurveyQuestion
-    fields = ['condition_question', 'condition_answer',]
+    # fields = ['condition_question', 'condition_answer',]
+    form_class = forms.MapSurveyQuestion_Condition_Form
     template_name = 'polls/survey_question_update.html'
 
     def get_success_url(self):
@@ -290,7 +310,8 @@ class Survey_Question_Update_Mandatory(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.MapSurveyQuestion
-    fields = ['is_mandatory',]
+    # fields = ['is_mandatory',]
+    form_class = forms.MapSurveyQuestion_Mandatory_Form
     template_name = 'polls/survey_question_update.html'
 
     def get_success_url(self):
@@ -343,7 +364,8 @@ class Person_Create(LoginRequiredMixin, generic.edit.CreateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Person
-    fields = ['email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title']
+    # fields = ['email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title']
+    form_class = forms.Person
     template_name = 'polls/person_create.html'
 
     def get_success_url(self):
@@ -354,7 +376,8 @@ class Person_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Person
-    fields = ['email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title']
+    # fields = ['email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title']
+    form_class = forms.Person
     template_name = 'polls/person_update.html'
 
     def get_success_url(self):
@@ -646,10 +669,8 @@ def question_delete(request, **kwargs):
 
     if not question.can_delete():
         return HttpResponseRedirect(reverse('polls:question-list'))
-    
-    question.delete()
-    
-    return HttpResponseRedirect(reverse('polls:question-list'))
+    else:
+        return HttpResponseRedirect(reverse('polls:question-delete-confirm', kwargs={'pk': question.pk}))
 
 
 def export_answers_to_xlsx(request, **kwargs):
@@ -692,3 +713,10 @@ def export_answers_to_xlsx(request, **kwargs):
     
     workbook.save(response)
     return response
+
+
+def index_news(request, **kwargs):
+    template = loader.get_template('polls/index.html')
+    context = {
+    }
+    return HttpResponse(template.render(context, request))

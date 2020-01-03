@@ -4,26 +4,26 @@
 <div class="container">
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>Delete Survey</h1>
+            <h1>Удалить опрос</h1>
             <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
-                <p>Are you sure you want to delete "{{ object }}"?</p>
-				<input type="submit" value="Confirm">
+                <p>Вы уверены, что хотите удалить опрос <b>{{ object }}</b>?</p>
+				<input type="submit" value="Удалить">
             </form>
         </div>
     </div>
 	{% if object.persons.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
-            <h2>Survey Instances WILL BE DELETED:</h1>
+            <h2>Также будут удалены следующие опросные листы:</h1>
             <table id="map-survey-person-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
                     <th>Email</th>
-                    <th>Name</th>
-                    <th>Last Name</th>
-                    <th>Secret Code</th>
-                    <th>Visited</th>
-                    <th>Started</th>
-                    <th>Finished</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Секретный код</th>
+                    <th>Время открытия</th>
+                    <th>Время начала</th>
+                    <th>Время завершения</th>
                 </thead>
                 <tbody>
                 {% for i in object.persons.all %}
@@ -45,13 +45,13 @@
 	{% if object.answers.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Answers WILL BE DELETED:</h2>
+            <h2>Также будут удалены следующие ответы:</h2>
             <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
 					<tr>
-						<th style="width: 25%">Person</th>
-						<th style="width: 25%">Question</th>
-						<th style="width: 50%">Answer</th>
+						<th style="width: 25%">Респондент</th>
+						<th style="width: 25%">Вопрос</th>
+						<th style="width: 50%">Ответ</th>
 					</tr>
 				</thead>
                 <tbody>

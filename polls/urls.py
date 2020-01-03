@@ -7,6 +7,7 @@ from . import views
 app_name = 'polls'
 
 urlpatterns = [
+    path('index/', views.index_news, name='index-news'),
     path('choice-list/', views.ChoiceList_List.as_view(), name='choice-list-list'),
     path('choice-list/create/', views.ChoiceList_Create.as_view(), name='choice-list-create'),
     path('choice-list-details/<int:pk>/', views.ChoiceList_Detail.as_view(), name='choice-list-detail'),
@@ -21,6 +22,7 @@ urlpatterns = [
     path('question-update/<int:pk>/choice-list/', views.Question_ChoiceList_Update.as_view(), name='question-update-choice-list'),
     path('question-update/<int:pk>/range/', views.Question_Range_Update.as_view(), name='question-update-range'),
     path('question-delete/<int:pk>/', views.question_delete, name='question-delete'),
+    path('question-delete/<int:pk>/confirm', views.Question_Delete.as_view(), name='question-delete-confirm'),
     path('survey/', views.Survey_List.as_view(), name='survey-list'),
     path('survey/create/', views.Survey_Create.as_view(), name='survey-create'),
     path('survey-details/<int:pk>/', views.Survey_Detail.as_view(), name='survey-detail'),

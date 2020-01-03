@@ -4,24 +4,25 @@
 <div class="container">
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>Delete Question from Survey</h1>
+            <h1>Удалить вопрос из опроса</h1>
             <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
-                <p>Are you sure you want to delete "{{ object }}"?</p>
-				<input type="submit" value="Confirm">
+                <p>Вы уверены, что хотите удалить вопрос <b>"{{ object.question }}"</b> из опроса <b>"{{ object.survey }}"</b>?</p>
+				<input type="submit" value="Удалить">
             </form>
         </div>
     </div>
+	<br>
 	{% if object.answers.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Answers WILL BE DELETED:</h2>
+            <h2>Также будут удалены следующие ответы:</h2>
             <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
 					<tr>
-						<th style="width: 25%">Survey</th>
-						<th style="width: 25%">Question</th>
-						<th style="width: 25%">Person</th>
-						<th style="width: 50%">Answer</th>
+						<th style="width: 25%">Опрос</th>
+						<th style="width: 25%">Вопрос</th>
+						<th style="width: 25%">Респондент</th>
+						<th style="width: 50%">Ответ</th>
 					</tr>
 				</thead>
                 <tbody>

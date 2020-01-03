@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from polls.views import index_news
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('polls.urls')),
     path('', include('django.contrib.auth.urls')),
+    path('', index_news, name='index'),
 ]

@@ -5,9 +5,9 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>[Survey] <u>{{ object.name }}</u></h1>
+            <h1>Опрос: <u>{{ object.name }}</u></h1>
             <blockquote class="blockquote">{{ object.description }}</blockquote>
-            <p><a href="/survey-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
+            <p><a href="/survey-update/{{ object.id }}" class="btn btn-secondary">Редактировать опрос</a></p>
         </div>
         <!--
         <div class="col-md-4" style="padding: 0px;">
@@ -30,7 +30,7 @@
 	{% if object.errors %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-			<h2>Errors</h2>
+			<h2>Ошибки</h2>
 			<ul class="list-group">
 				{% for e in object.errors %}
 				<li class="list-group-item list-group-item-danger">{{e|safe}}</li>
@@ -42,22 +42,22 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Questions</h2>
-            <p><a href="#" class="btn btn-secondary" role="button" onclick="toggle_visibility('add-question-form');">Add Question</a></p>
+            <h2>Вопросы</h2>
+            <p><a href="#" class="btn btn-secondary" role="button" onclick="toggle_visibility('add-question-form');">Добавить вопрос</a></p>
             <div class="alert alert-warning" id="add-question-form" style="display: none;">
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <input class="btn btn-secondary" type="submit" value="Add" />
+                    <input class="btn btn-secondary" type="submit" value="Добавить" />
                 </form>
             </div>
             {% if object.questions.all %}
-            <table id="map-survey-question-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+            <table id="map-survey-question-list" class="table table-hover table-sm">
                 <thead class="thead-dark">
-                    <th>Sort Order</th>
-                    <th>Name</th>
-                    <th>Conditional</th>
-					<th>Type</th>
+                    <th>Порядковый номер</th>
+                    <th>Вопрос</th>
+                    <th>Условный?</th>
+					<th>Тип</th>
                     <th></th>
                     <th></th>
                 </thead>
@@ -65,11 +65,11 @@
                 {% for i in object.questions.all %}
                 <tr class="parent">
                     <td>{{ i.sort_order }} ({{ i.id }})</td>
-                    <td>{{ i.question.name }}{%if not i.is_mandatory %} <b>[не обязательный]</b>{% endif %}</td>
-                    <td>{% if i.has_condition %}<b>Yes</b>{% else %}No{% endif %}</td>
+                    <td>{{ i.question.name }}{%if not i.is_mandatory %}<br><b>[не обязательный]</b>{% endif %}</td>
+                    <td>{% if i.has_condition %}<b>Да</b>{% else %}Нет{% endif %}</td>
 					<td>{{ i.question.data_type }}</td>
-                    <td class="technical-links"><a href="/survey-question/{{ i.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/survey-question-delete/{{ i.id }}/">Delete from Survey</a></td>
+                    <td class="technical-links"><a href="/survey-question/{{ i.id }}/">Параметры вопроса</a></td>
+                    <td class="technical-links"><a href="/survey-question-delete/{{ i.id }}/">Удалить из опроса</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -81,18 +81,18 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Persons Assigned</h2>
-            <p><a href="/survey-update/{{ object.id }}/add-person" class="btn btn-secondary">Add Person</a></p>
+            <h2>Опросные листы</h2>
+            <p><a href="/survey-update/{{ object.id }}/add-person" class="btn btn-secondary">Добавить опросный лист (назначить респонденту прохождение этого опроса)</a></p>
             {% if object.persons.all %}
-            <table id="map-survey-person-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+            <table id="map-survey-person-list" class="table table-hover table-sm">
                 <thead class="thead-dark">
                     <th>Email</th>
-                    <th>Name</th>
-                    <th>Last Name</th>
-                    <th>Secret Code</th>
-                    <th>Visited</th>
-                    <th>Started</th>
-                    <th>Finished</th>
+                    <!--th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Секретный код</th-->
+                    <th>Время открытия</th>
+                    <th>Время начала</th>
+                    <th>Время завершения</th>
                     <th></th>
                     <th></th>
                 </thead>
@@ -100,14 +100,14 @@
                 {% for i in object.persons.all %}
                 <tr class="parent">
                     <td>{{ i.person.email }}</td>
-                    <td>{{ i.person.name_first }}</td>
+                    <!--td>{{ i.person.name_first }}</td>
                     <td>{{ i.person.name_last }}</td>
-                    <td>{{ i.random_letters }}</td>
+                    <td>{{ i.random_letters }}</td-->
                     <td>{{ i.time_visit|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ i.time_start|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ i.time_end|date:"d.m.Y H:i:s" }}</td>
-                    <td><a href="/survey/{{ i.id }}/{{ i.random_letters }}/">Link</a></td>
-                    <td class="technical-links"><a href="/survey-person-delete/{{ i.id }}/">Delete</a></td>
+                    <td><a href="/survey/{{ i.id }}/{{ i.random_letters }}/">Ссылка</a> ({{request.get_host}}{{i.get_absolute_url}})</td>
+                    <td class="technical-links"><a href="/survey-person-delete/{{ i.id }}/">Удалить опросный лист</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -119,15 +119,15 @@
 	{% if object.answers.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Answers</h2>
-			<p><a href="/survey-details/{{ object.id }}/export-answers/" class="btn btn-success">Export to XLSX</a></p>
-            <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+            <h2>Полученные ответы</h2>
+			<p><a href="/survey-details/{{ object.id }}/export-answers/" class="btn btn-success">Скачать ответы в формате Excel</a></p>
+            <table id="survey-answers-list" class="table table-hover table-bordered table-sm">
                 <thead class="thead-dark">
 					<tr>
-						<th style="width: 20%">Person</th>
-						<th style="width: 20%">Question</th>
-						<th style="width: 45%">Answer</th>
-						<th style="width: 15%">Answer (Numeric)</th>
+						<th style="width: 20%">Респондент</th>
+						<th style="width: 20%">Вопрос</th>
+						<th style="width: 45%">Ответ</th>
+						<th style="width: 15%">Ответ (Число)</th>
 					</tr>
 				</thead>
                 <tbody>

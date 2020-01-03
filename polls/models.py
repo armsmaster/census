@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 import random
 
 
@@ -93,8 +94,8 @@ class Question(models.Model):
         (TEXT, 'Text'),
         (NUMBER, 'Number'),
         (NUMBER_RANGE, 'Numeric Range'),
-        (MSMC, 'Multi Select Multiple Choice'),
-        (SSMC, 'Single Select Multiple Choice'),
+        (MSMC, 'Multi Select'),
+        (SSMC, 'Single Select'),
     )
 
     name = models.CharField(max_length=200)
@@ -183,6 +184,9 @@ class MapUserSurvey(models.Model):
     time_visit = models.DateTimeField(null=True, blank=True)
     random_letters = models.CharField(max_length=5, null=True, blank=True)
     
+    def get_absolute_url(self):
+        return reverse('polls:survey-start', kwargs={'id': self.id, 'secret': self.random_letters})
+    
     def generate_random_letters(self):
         letters = 'qwertyuiopasdfghjklzxcvbnm'
         result = ''
@@ -199,7 +203,7 @@ class MapUserSurvey(models.Model):
         super(MapUserSurvey, self).save()
 
     def __str__(self):
-        return '{} ! {}'.format(self.person, self.survey)
+        return '{} / {}'.format(self.survey, self.person)
 
 
 class Answer(models.Model):

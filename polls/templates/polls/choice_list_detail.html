@@ -5,29 +5,29 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>[Choice List] <u>{{ object.name }}</u></h1>
-            <p><a href="/choice-list-update/{{ object.id }}" class="btn btn-secondary">Rename</a></p>
+            <h1>Список вариантов ответа <u>{{ object.name }}</u></h1>
+            <p><a href="/choice-list-update/{{ object.id }}" class="btn btn-secondary">Переименовать</a></p>
         </div>
     </div>
 
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Choices</h2>
-            <p><a href="#" class="btn btn-secondary" role="button" onclick="toggle_visibility('add-choice-form');">Add Choice</a></p>
+            <h2>Варианты ответа</h2>
+            <p><a href="#" class="btn btn-secondary" role="button" onclick="toggle_visibility('add-choice-form');">Добавить вариант</a></p>
             <div class="alert alert-warning" id="add-choice-form" style="display: none;">
                 <form method="post">
                     {% csrf_token %}
                     {{ form }}
-                    <input class="btn btn-secondary" type="submit" value="Add" />
+                    <input class="btn btn-secondary" type="submit" value="Сохранить" />
                 </form>
             </div>
             {% if object.choices.all %}
-            <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+            <table id="choice-list-list" class="table table-hover table-sm">
                 <thead class="thead-dark">
-                    <th>Id</th>
-                    <th>Name</th>
-					<th>Numeric Value</th>
+                    <th>Номер записи</th>
+                    <th>Текстовое значение</th>
+					<th>Численное значение</th>
                     <th></th>
                     <th></th>
                 </thead>
@@ -37,8 +37,8 @@
                     <td>{{ i.id }}</td>
                     <td>{{ i.name }}</td>
 					<td{% if i.num_value is None %} class="table-danger"{% endif %}>{{ i.num_value }}</td>
-                    <td class="technical-links"><a href="/choice-update/{{ i.id }}/">Edit</a></td>
-                    <td class="technical-links"><a href="/choice-delete/{{ i.id }}/">Delete</a></td>
+                    <td class="technical-links"><a href="/choice-update/{{ i.id }}/">Редактировать</a></td>
+                    <td class="technical-links"><a href="/choice-delete/{{ i.id }}/">Удалить</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

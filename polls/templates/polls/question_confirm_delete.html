@@ -4,14 +4,13 @@
 <div class="container">
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>Редактировать респондента <b>{{ object }}</b></h1>
+            <h1>Удаление вопроса из базы</h1>
             <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
-                <table class="table table-bordered table-condensed table-hover" style="font-size: 1.0em">
-                    {{ form.as_table }}
-                </table>
-                <input type="submit" value="Сохранить" />
+                <p>Вы уверены, что хотите удалить вопрос <b>{{ object }}</b>?</p>
+				<input type="submit" value="Удалить">
             </form>
         </div>
     </div>
+	<br>
 </div>
 {% endblock %}

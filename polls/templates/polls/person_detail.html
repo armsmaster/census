@@ -5,26 +5,25 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>[Person] <u>{{ object }}</u></h1>
+            <h1>Респондент: <u>{{ object }}</u></h1>
         </div>
-        <div class="col-md-4" style="padding: 0px;">
-            <h2>Information</h2>
-            <p><a href="/person-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
+        <div class="col-md-6" style="padding: 0px;">
+            <h2>Информация</h2>
             <table class="table table-hover">
                 <tr>
-                    <th style="padding: 1px;">ID</th>
+                    <th style="padding: 1px;">Номер записи</th>
                     <td style="padding: 1px;text-align: right;">{{ object.id }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Name First</th>
+                    <th style="padding: 1px;">Имя</th>
                     <td style="padding: 1px;text-align: right;">{{ object.name_first }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Name Second</th>
+                    <th style="padding: 1px;">Отчетство</th>
                     <td style="padding: 1px;text-align: right;">{{ object.name_second }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Name Last</th>
+                    <th style="padding: 1px;">Фамилия</th>
                     <td style="padding: 1px;text-align: right;">{{ object.name_last }}</td>
                 </tr>
                 <tr>
@@ -32,40 +31,40 @@
                     <td style="padding: 1px;text-align: right;">{{ object.email }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Birthday</th>
+                    <th style="padding: 1px;">Дата рожения</th>
                     <td style="padding: 1px;text-align: right;">{{ object.birth_date }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Sex</th>
+                    <th style="padding: 1px;">Пол</th>
                     <td style="padding: 1px;text-align: right;">{{ object.sex }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Title</th>
+                    <th style="padding: 1px;">Должность</th>
                     <td style="padding: 1px;text-align: right;">{{ object.title }}</td>
                 </tr>
             </table>
-
+			<p><a href="/person-update/{{ object.id }}" class="btn btn-secondary">Редактировать данные респондента</a></p>
         </div>
     </div>
 
     {% if object.surveys.all %}
     <div class="row align-items-start">
         <div class="col-md-6" style="padding: 0px;">
-            <h2>Surveys Assigned</h2>
+            <h2>Проходит следующие опросы:</h2>
             <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
                     <th>Name</th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    <!--th></th>
+                    <th></th-->
                 </thead>
                 <tbody>
                 {% for i in object.surveys.all %}
                 <tr class="parent">
                     <td>{{ i.survey.name }}</td>
-                    <td class="technical-links"><a href="/survey-details/{{ i.survey.id }}/">Details</a></td>
-                    <td class="technical-links"><a href="/survey-update/{{ i.survey.id }}/">Edit</a></td>
-                    <td class="technical-links"><a href="/survey-delete/{{ i.survey.id }}/">Delete</a></td>
+                    <td class="technical-links"><a href="/survey-details/{{ i.survey.id }}/">Параметры опроса</a></td>
+                    <!--td class="technical-links"><a href="/survey-update/{{ i.survey.id }}/">Редактировать</a></td>
+                    <td class="technical-links"><a href="/survey-delete/{{ i.survey.id }}/">Удалить</a></td-->
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -77,7 +76,7 @@
 	{% if object.answers.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Answers</h2>
+            <h2>Предоставил{%if object.sex == object.SEX_F %}а{% endif %} следующие ответы:</h2>
             <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
 					<tr>

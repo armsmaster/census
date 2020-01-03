@@ -7,6 +7,54 @@ class Choice_Form(forms.ModelForm):
     class Meta:
         model = models.Choice
         fields = ('name', 'num_value')
+        labels = {
+            'name':         'Текстовое значение',
+            'num_value':    'Численное значение',
+        }
+
+
+class ChoiceList(forms.ModelForm):
+
+    class Meta:
+        model = models.ChoiceList
+        fields = ('name',)
+        labels = {
+            'name':         'Название',
+        }
+
+
+class Question(forms.ModelForm):
+
+    class Meta:
+        model = models.Question
+        fields = ('name', 'text', 'data_type',)
+        labels = {
+            'name':         'Название вопроса',
+            'text':         'Текст вопроса',
+            'data_type':    'Тип вопроса',
+        }
+
+
+class Question_ChoiceList(forms.ModelForm):
+
+    class Meta:
+        model = models.Question
+        fields = ('choice_list',)
+        labels = {
+            'choice_list':  'Список вариантов ответа',
+        }
+
+
+class Question_Range(forms.ModelForm):
+
+    class Meta:
+        model = models.Question
+        fields = ('range_min', 'range_max', 'range_step',)
+        labels = {
+            'range_min':    'Нижняя граница диапазона',
+            'range_max':    'Верхняя граница диапазона',
+            'range_step':   'Шаг',
+        }
 
 
 class MapSurveyQuestion_Form(forms.ModelForm):
@@ -14,14 +62,30 @@ class MapSurveyQuestion_Form(forms.ModelForm):
     class Meta:
         model = models.MapSurveyQuestion
         fields = ('question',)
+        labels = {
+            'question': 'Вопрос',
+        }
 
 
-# not used yet
 class MapSurveyQuestion_Condition_Form(forms.ModelForm):
 
     class Meta:
         model = models.MapSurveyQuestion
         fields = ('condition_question', 'condition_answer',)
+        labels = {
+            'condition_question': 'Связанный вопрос',
+            'condition_answer': 'Ответ, являющийся условием',
+        }
+
+
+class MapSurveyQuestion_Mandatory_Form(forms.ModelForm):
+
+    class Meta:
+        model = models.MapSurveyQuestion
+        fields = ('is_mandatory',)
+        labels = {
+            'is_mandatory': 'Вопрос обязательный?',
+        }
 
 
 class MapUserSurvey_Form(forms.ModelForm):
@@ -29,6 +93,9 @@ class MapUserSurvey_Form(forms.ModelForm):
     class Meta:
         model = models.MapUserSurvey
         fields = ('person',)
+        labels = {
+            'person': 'Респондент',
+        }
 
 
 class MSMC(forms.Form):
@@ -62,3 +129,29 @@ class Numeric(forms.Form):
 class Txt(forms.Form):
     
     data = forms.CharField(required=False, max_length=2000, widget=forms.Textarea)
+
+
+class Person(forms.ModelForm):
+    class Meta:
+        model = models.Person
+        fields = ('email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title')
+        labels = {
+            'email': 'Email', 
+            'name_first': 'Имя', 
+            'name_second': 'Отчество', 
+            'name_last': 'Фамилия', 
+            'birth_date': 'Дата рождения', 
+            'sex': 'Пол', 
+            'title': 'Должность'
+        }
+
+
+class Survey(forms.ModelForm):
+    class Meta:
+        model = models.Survey
+        fields = ('name', 'description')
+        labels = {
+            'name': 'Название опроса', 
+            'description': 'Приветствие',
+        }
+

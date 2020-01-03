@@ -5,19 +5,19 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>[Question] <u>{{ object.name }}</u></h1>
+            <h1>Вопрос: <b>{{ object.name }}</b></h1>
             <blockquote class="blockquote">{{ object.text }}</blockquote>
-            <p><a href="/question-update/{{ object.id }}" class="btn btn-secondary">Edit</a></p>
+            <p><a href="/question-update/{{ object.id }}" class="btn btn-secondary">Редактировать вопрос</a></p>
         </div>
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Information</h2>
+            <h2>Параметры вопроса</h2>
             <table class="table table-hover">
                 <tr>
-                    <th style="padding: 1px;">ID</th>
+                    <th style="padding: 1px;">Номер записи</th>
                     <td style="padding: 1px;text-align: right;">{{ object.id }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Name</th>
+                    <th style="padding: 1px;">Название</th>
                     <td style="padding: 1px;text-align: right;">{{ object.name }}</td>
                 </tr>
                 <!--tr>
@@ -25,7 +25,7 @@
                     <td style="padding: 1px;text-align: right;"><blockquote class="blockquote">{{ object.text }}</blockquote></td>
                 </tr-->
                 <tr>
-                    <th style="padding: 1px;">Data Type</th>
+                    <th style="padding: 1px;">Тип</th>
                     <td style="padding: 1px;text-align: right;">{{ object.data_type_name }}</td>
                 </tr>
 
@@ -39,15 +39,15 @@
                 {% endif %}
                 {% if object.data_type == object.NUMBER_RANGE %}
                 <tr>
-                    <th style="padding: 1px;">Range Minimum</th>
+                    <th style="padding: 1px;">Нижняя граница диапазона</th>
                     <td style="padding: 1px;text-align: right;">{{ object.range_min }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Range Maximum</th>
+                    <th style="padding: 1px;">Верхняя граница диапазона</th>
                     <td style="padding: 1px;text-align: right;">{{ object.range_max }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Range Step</th>
+                    <th style="padding: 1px;">Шаг</th>
                     <td style="padding: 1px;text-align: right;">{{ object.range_step }}</td>
                 </tr>
                 {% endif %}
@@ -60,7 +60,7 @@
     {% if object.choice_list %}
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Варианты ответа (Choice List <b><a href="/choice-list-details/{{ object.choice_list.id }}/">{{ object.choice_list }}</a></b>)</h2>
+            <h2>Варианты ответа (Список вариантов <b><a href="/choice-list-details/{{ object.choice_list.id }}/">{{ object.choice_list }}</a></b>)</h2>
             {% if object.choice_list.choices.all %}
             <ul class="list-group">
                 {% for i in object.choice_list.choices.all %}
@@ -72,13 +72,13 @@
     </div>
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <p><a href="/question-update/{{ object.id }}/choice-list" class="btn btn-secondary">Change Choice List</a></p>
+            <p><a href="/question-update/{{ object.id }}/choice-list" class="btn btn-secondary">Установить другой список вариантов ответов</a></p>
         </div>
     </div>
     {% else %}
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <p><a href="/question-update/{{ object.id }}/choice-list" class="btn btn-secondary">Select Choice List</a></p>
+            <p><a href="/question-update/{{ object.id }}/choice-list" class="btn btn-secondary">Установить список вариантов ответов</a></p>
         </div>
     </div>
     {% endif %}
@@ -96,13 +96,13 @@
     </div>
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <p><a href="/question-update/{{ object.id }}/range" class="btn btn-secondary">Edit Range Parameters</a></p>
+            <p><a href="/question-update/{{ object.id }}/range" class="btn btn-secondary">Редактировать параметры диапазона</a></p>
         </div>
     </div>
     {% else %}
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <p><a href="/question-update/{{ object.id }}/range" class="btn btn-secondary">Define Range Parameters</a></p>
+            <p><a href="/question-update/{{ object.id }}/range" class="btn btn-secondary">Установить параметры диапазона</a></p>
         </div>
     </div>
     {% endif %}
@@ -111,11 +111,11 @@
     {% if object.surveys.all %}
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Surveys</h2>
-            <table id="map-survey-question-list" class="table table-hover">
-                <thead>
+            <h2>Опросы, в которых используется данный вопрос</h2>
+            <table id="map-survey-question-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+                <thead class="thead-dark">
                     <tr>
-                        <th>Name</th>
+                        <th>Название опроса</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -123,7 +123,7 @@
                 {% for i in object.surveys.all %}
                 <tr>
                     <td>{{ i.survey.name }}</td>
-                    <td class="technical-links"><a href="/survey-details/{{ i.survey.id }}/">Details</a></td>
+                    <td class="technical-links"><a href="/survey-details/{{ i.survey.id }}/">Перейти на страницу опроса</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -135,7 +135,7 @@
 	{% if object.answers.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Answers</h2>
+            <h2>Собранные ответы на данный вопрос</h2>
             <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
 					<tr>

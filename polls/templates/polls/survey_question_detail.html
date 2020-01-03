@@ -5,39 +5,39 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Information</h2>
+            <h2>Вопрос <b>"{{object.question.name}}"</b> в опросе <b>"{{ object.survey.name }}"</b></h2>
             <table class="table table-hover">
                 <tr>
-                    <th style="padding: 1px;">ID</th>
+                    <th style="padding: 1px;">Номер записи</th>
                     <td style="padding: 1px;text-align: right;">{{ object.id }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Survey</th>
+                    <th style="padding: 1px;">Опрос</th>
                     <td style="padding: 1px;text-align: right;">{{ object.survey.name }}</td>
                 </tr>
 				<tr>
-                    <th style="padding: 1px;">Question</th>
+                    <th style="padding: 1px;">Вопрос</th>
                     <td style="padding: 1px;text-align: right;">{{ object.question.name }}</td>
                 </tr>
 				<tr>
-                    <th style="padding: 1px;">Is Mandatory (вопрос обязательный)</th>
+                    <th style="padding: 1px;">Вопрос обязательный?</th>
                     <td style="padding: 1px;text-align: right;">{{ object.is_mandatory }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Data Type</th>
+                    <th style="padding: 1px;">Тип вопроса</th>
                     <td style="padding: 1px;text-align: right;">{{ object.question.data_type_name }}</td>
                 </tr>
                 {% if object.question.data_type == object.question.NUMBER_RANGE %}
                 <tr>
-                    <th style="padding: 1px;">Range Minimum</th>
+                    <th style="padding: 1px;">Нижняя граница диапазона</th>
                     <td style="padding: 1px;text-align: right;">{{ object.question.range_min }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Range Maximum</th>
+                    <th style="padding: 1px;">Верхняя граница диапазона</th>
                     <td style="padding: 1px;text-align: right;">{{ object.question.range_max }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Range Step</th>
+                    <th style="padding: 1px;">Шаг</th>
                     <td style="padding: 1px;text-align: right;">{{ object.question.range_step }}</td>
                 </tr>
                 {% endif %}
@@ -56,11 +56,11 @@
             <h2>Условие для выведения вопроса</h2>
             <table class="table table-hover table-warning">
                 <tr>
-                    <th style="padding: 1px;">Question</th>
+                    <th style="padding: 1px;">Вопрос</th>
                     <td style="padding: 1px;text-align: right;">{{ object.condition_question }}</td>
                 </tr>
                 <tr>
-                    <th style="padding: 1px;">Answer</th>
+                    <th style="padding: 1px;">Ответ</th>
                     <td style="padding: 1px;text-align: right;">{{ object.condition_answer }}</td>
                 </tr>
 			</table>
@@ -68,13 +68,13 @@
     </div>
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <p><a href="/survey-question-update/{{ object.id }}/" class="btn btn-secondary">Change/Remove Condition</a></p>
+            <p><a href="/survey-question-update/{{ object.id }}/" class="btn btn-secondary">Изменить / удалить условие</a></p>
         </div>
     </div>
     {% else %}
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <p><a href="/survey-question-update/{{ object.id }}/" class="btn btn-secondary">Create Condition</a></p>
+            <p><a href="/survey-question-update/{{ object.id }}/" class="btn btn-secondary">Создать условие</a></p>
         </div>
     </div>
     {% endif %}
@@ -82,14 +82,14 @@
 	{% if object.answers.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Answers</h2>
+            <h2>Полученные ответы</h2>
             <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
                 <thead class="thead-dark">
 					<tr>
-						<th style="width: 20%">Person</th>
-						<th style="width: 20%">Survey</th>
-						<th style="width: 45%">Answer</th>
-						<th style="width: 15%">Answer (Numeric)</th>
+						<th style="width: 20%">Респондент</th>
+						<th style="width: 20%">Опрос</th>
+						<th style="width: 45%">Ответ</th>
+						<th style="width: 15%">Ответ (Число)</th>
 					</tr>
 				</thead>
                 <tbody>

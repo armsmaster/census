@@ -4,11 +4,11 @@
 <div class="container">
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
-            <h1>Surveys</h1>
-            <p><a href="/survey/create/" class="btn btn-secondary">Create New</a></p>
-            <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+            <h1>Опросы</h1>
+            <p><a href="/survey/create/" class="btn btn-secondary">Создать новый опрос</a></p>
+            <table id="choice-list-list" class="table table-hover table-sm">
                 <thead class="thead-dark">
-                    <th>Name</th>
+                    <th>Название</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -17,9 +17,9 @@
                 {% for i in items %}
                 <tr class="parent">
                     <td>{{ i.name }}</td>
-                    <td class="technical-links"><a href="/survey-details/{{ i.id }}">Details</a></td>
-                    <td class="technical-links"><a href="/survey-update/{{ i.id }}">Edit</a></td>
-                    <td class="technical-links"><a href="/survey-delete/{{ i.id }}">Delete</a></td>
+                    <td class="technical-links"><a href="/survey-details/{{ i.id }}">Параметры опроса</a></td>
+                    <td class="technical-links"><a href="/survey-update/{{ i.id }}">Редактировать</a></td>
+                    <td class="technical-links"><a href="/survey-delete/{{ i.id }}">Удалить</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -27,12 +27,4 @@
         </div>
     </div>
 </div>
-<script>
-$('table').filterTable({
-    containerClass: "form-group",
-    containerTag: "div",
-    inputType: "text",
-    label: "Применить фильтр: "
-});
-</script>
 {% endblock %}

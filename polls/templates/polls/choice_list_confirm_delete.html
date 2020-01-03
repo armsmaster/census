@@ -4,21 +4,22 @@
 <div class="container">
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>Delete Choice List</h1>
+            <h1>Удаление списка вариантов ответа</h1>
             <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
-                <p>Are you sure you want to delete "{{ object }}"?</p>
-				<input type="submit" value="Confirm">
+                <p>Вы уверены, что хотите удалить список вариантов ответа <b>{{ object }}</b>?</p>
+				<input type="submit" value="Удалить">
             </form>
         </div>
     </div>
+	<br>
 	{% if object.questions.all %}
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0;">
-            <h2>Affected Questions</h1>
-            <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+            <h2>У следующих вопросов исчезнет связанный список вариантов ответов:</h1>
+            <table id="choice-list-list" class="table table-hover table-sm">
                 <thead class="thead-dark">
-                    <th>Name</th>
-                    <th>Type</th>
+                    <th>Название вопроса</th>
+                    <th>Тип</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -26,7 +27,7 @@
                 <tr class="parent">
                     <td>{{ i.name }}</td>
                     <td>{{ i.data_type_name }}</td>
-                    <td class="technical-links"><a href="/question-details/{{ i.id }}/">Details</a></td>
+                    <td class="technical-links"><a href="/question-details/{{ i.id }}/">Страница вопроса</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

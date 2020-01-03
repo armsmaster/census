@@ -3,21 +3,22 @@
 {% block content %}
 <div class="container">
 
-    <div class="row align-items-start">
+    <!--div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1>[Survey] <u>{{ object.name }}</u></h1>
+            <h1>Опрос <u>{{ object.name }}</u></h1>
             <p>{{ object.description }}</p>
-            <!--p><a href="/survey-update/{{ i.id }}" class="btn btn-secondary">Edit</a></p-->
         </div>
-    </div>
+    </div-->
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h2>Add Person</h2>
+            <h2>Создать опросный лист<br>(назначить респонденту прохождение опроса <b>{{ object.name }}</b>)</h2>
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input class="btn btn-secondary" type="submit" value="Add" />
+					<table class="table table-bordered table-condensed table-hover" style="font-size: 1.0em">
+                    {{ form.as_table }}
+					</table>
+                    <input class="btn btn-secondary" type="submit" value="Создать" />
                 </form>
 
         </div>
