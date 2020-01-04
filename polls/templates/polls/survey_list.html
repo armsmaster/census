@@ -8,6 +8,7 @@
             <p><a href="/survey/create/" class="btn btn-secondary">Создать новый опрос</a></p>
             <table id="choice-list-list" class="table table-hover table-sm">
                 <thead class="thead-dark">
+					<th>Дата создания</th>
                     <th>Название</th>
                     <th></th>
                     <th></th>
@@ -16,6 +17,7 @@
                 <tbody>
                 {% for i in items %}
                 <tr class="parent">
+					<td>{{ i.create_date|date:'d.m.Y' }}</td>
                     <td>{{ i.name }}</td>
                     <td class="technical-links"><a href="/survey-details/{{ i.id }}">Параметры опроса</a></td>
                     <td class="technical-links"><a href="/survey-update/{{ i.id }}">Редактировать</a></td>

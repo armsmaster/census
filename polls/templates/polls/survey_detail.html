@@ -6,6 +6,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h1>Опрос: <u>{{ object.name }}</u></h1>
+			<p>Дата создания: <b>{{ object.create_date|date:'d.m.Y' }}</b></p>
             <blockquote class="blockquote">{{ object.description }}</blockquote>
             <p><a href="/survey-update/{{ object.id }}" class="btn btn-secondary">Редактировать опрос</a></p>
         </div>

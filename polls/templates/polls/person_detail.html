@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <th style="padding: 1px;">Дата рожения</th>
-                    <td style="padding: 1px;text-align: right;">{{ object.birth_date }}</td>
+                    <td style="padding: 1px;text-align: right;">{{ object.birth_date|date:'d.m.Y' }}</td>
                 </tr>
                 <tr>
                     <th style="padding: 1px;">Пол</th>
@@ -51,7 +51,7 @@
     <div class="row align-items-start">
         <div class="col-md-6" style="padding: 0px;">
             <h2>Проходит следующие опросы:</h2>
-            <table id="choice-list-list" class="table table-hover table-sm" style="font-size: 0.8em;">
+            <table id="choice-list-list" class="table table-hover table-sm">
                 <thead class="thead-dark">
                     <th>Name</th>
                     <th></th>
@@ -77,7 +77,7 @@
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h2>Предоставил{%if object.sex == object.SEX_F %}а{% endif %} следующие ответы:</h2>
-            <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+            <table id="survey-answers-list" class="table table-hover table-bordered table-sm">
                 <thead class="thead-dark">
 					<tr>
 						<th style="width: 25%">Survey</th>

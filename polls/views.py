@@ -48,7 +48,6 @@ class ChoiceList_Create(LoginRequiredMixin, generic.edit.CreateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
-    # fields = ['name']
     form_class = forms.ChoiceList
     template_name = 'polls/choice_list_create.html'
 
@@ -60,7 +59,6 @@ class ChoiceList_Update(LoginRequiredMixin, generic.UpdateView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.ChoiceList
-    # fields = ['name']
     form_class = forms.ChoiceList
     template_name = 'polls/choice_list_update.html'
 
@@ -107,12 +105,79 @@ class Choice_Delete(LoginRequiredMixin, generic.DeleteView):
         return reverse('polls:choice-list-detail', kwargs={'pk': self.object.choice_list.pk})
 
 
+class QuestionGroup_Create(LoginRequiredMixin, generic.edit.CreateView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+    model = models.QuestionGroup
+    form_class = forms.QGroup
+    template_name = 'polls/qgroup_create.html'
+
+    def get_success_url(self):
+        return reverse('polls:question-list')
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        lvl3 = [x.pk for x in models.QuestionGroup.objects.all() if x.level() >= 3]
+        context['form'].fields['parent'].queryset = models.QuestionGroup.objects.all().exclude(pk__in=lvl3)
+        return context
+
+
+class QuestionGroup_Update(LoginRequiredMixin, generic.UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+    model = models.QuestionGroup
+    form_class = forms.QGroup
+    template_name = 'polls/qgroup_update.html'
+
+    def get_success_url(self):
+        return reverse('polls:question-list')
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        lvl3 = [x.pk for x in models.QuestionGroup.objects.all() if x.level() >= 3]
+        context['form'].fields['parent'].queryset = models.QuestionGroup.objects.all().exclude(pk=context['object'].pk).exclude(pk__in=lvl3)
+        return context
+
+
+class QuestionGroup_Detail(LoginRequiredMixin, generic.DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+    model = models.QuestionGroup
+    template_name = 'polls/qgroup_detail.html'
+
+
+class QuestionGroup_Delete(LoginRequiredMixin, generic.DeleteView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+    model = models.QuestionGroup
+    template_name = 'polls/qgroup_confirm_delete.html'
+    
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        parent = self.object.parent
+        for s in self.object.subgroups.all():
+            s.parent = parent
+            s.save()
+        for q in self.object.questions.all():
+            q.group = parent
+            q.save()
+        return super(QuestionGroup_Delete, self).delete(*args, **kwargs)
+    
+    def get_success_url(self):
+        return reverse('polls:question-list')
+
+
 class Question_List(LoginRequiredMixin, generic.ListView):
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Question
     template_name = 'polls/question_list.html'
     context_object_name = 'items'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['question_groups'] = sorted([x for x in models.QuestionGroup.objects.all()], key=lambda x: x.path())
+        return context
 
 
 class Question_Detail(LoginRequiredMixin, generic.DetailView):

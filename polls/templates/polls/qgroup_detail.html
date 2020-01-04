@@ -1,0 +1,36 @@
+{% extends 'polls/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0;">
+            <h1>Группа вопросов <b>{{object.path}}</b></h1>
+            <table id="choice-list-list" class="table table-hover table-sm">
+                <thead class="thead-dark">
+                    <th>Вопрос</th>
+                    <th>Тип</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                {% for i in object.all_questions %}
+                <tr class="parent">
+                    <td>
+						<div>{{ i.name }}</div>
+						<div style="font-size: 0.8em; color: #CCCCCC;">Группа: {% if i.group %}{{ i.group }}{% else %} Не установлена{% endif %}</div>
+					</td>
+                    <td>{{ i.data_type_name }}</td>
+                    <td class="technical-links"><a href="/question-details/{{ i.id }}/">Параметры</a></td>
+                    <td class="technical-links"><a href="/question-update/{{ i.id }}/">Редактировать</a></td>
+                    <td class="technical-links">{% if i.can_delete %}<a href="/question-delete/{{ i.id }}/">Удалить</a>{% endif %}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

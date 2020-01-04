@@ -5,12 +5,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+import datetime
 import random
 
 
 class Survey(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
+    create_date = models.DateField(default=datetime.date.today, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -82,6 +84,39 @@ class Choice(models.Model):
         return 'Choice <{n}> (Choice List <{l}>)'.format(l=self.choice_list.name, n=self.name)
 
 
+class QuestionGroup(models.Model):
+    name = models.CharField(max_length=500)
+    parent = models.ForeignKey('QuestionGroup', on_delete=models.CASCADE, blank=True, null=True, related_name='subgroups')
+    
+    def level(self):
+        if not self.parent:
+            return 1
+        else:
+            return self.parent.level() + 1
+    
+    def path(self):
+        if not self.parent:
+            return self.name
+        return '{p} / {s}'.format(p=self.parent.path(), s=self.name)
+    
+    def __str__(self):
+        return self.path()
+        
+    def all_questions(self):
+        output = []
+        for x in self.questions.all():
+            output.append(x)
+        for sg in self.subgroups.all():
+            sgq = sg.all_questions()
+            for x in sgq:
+                output.append(x)
+        return output
+        
+    def all_questions_count(self):
+        aq = self.all_questions()
+        return len(aq)
+
+
 class Question(models.Model):
 
     TEXT = 'TEXT'
@@ -97,7 +132,8 @@ class Question(models.Model):
         (MSMC, 'Multi Select'),
         (SSMC, 'Single Select'),
     )
-
+    
+    group = models.ForeignKey(QuestionGroup, on_delete=models.CASCADE, blank=True, null=True, related_name='questions')
     name = models.CharField(max_length=200)
     text = models.TextField()
     data_type = models.CharField(max_length=50, choices=TYPE_CHOICES, default=SSMC)

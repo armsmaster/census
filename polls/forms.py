@@ -2,6 +2,10 @@ from django import forms
 from . import models
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
 class Choice_Form(forms.ModelForm):
 
     class Meta:
@@ -23,15 +27,27 @@ class ChoiceList(forms.ModelForm):
         }
 
 
+class QGroup(forms.ModelForm):
+    
+    class Meta:
+        model = models.QuestionGroup
+        fields = ('name', 'parent')
+        labels = {
+            'name':         'Название группы',
+            'parent':       'Входит в группу',
+        }
+
+
 class Question(forms.ModelForm):
 
     class Meta:
         model = models.Question
-        fields = ('name', 'text', 'data_type',)
+        fields = ('group', 'name', 'text', 'data_type',)
         labels = {
             'name':         'Название вопроса',
             'text':         'Текст вопроса',
             'data_type':    'Тип вопроса',
+            'group':        'Группа'
         }
 
 
@@ -136,22 +152,29 @@ class Person(forms.ModelForm):
         model = models.Person
         fields = ('email', 'name_first', 'name_second', 'name_last', 'birth_date', 'sex', 'title')
         labels = {
-            'email': 'Email', 
-            'name_first': 'Имя', 
-            'name_second': 'Отчество', 
-            'name_last': 'Фамилия', 
-            'birth_date': 'Дата рождения', 
-            'sex': 'Пол', 
-            'title': 'Должность'
+            'email':        'Email', 
+            'name_first':   'Имя', 
+            'name_second':  'Отчество', 
+            'name_last':    'Фамилия', 
+            'birth_date':   'Дата рождения', 
+            'sex':          'Пол', 
+            'title':        'Должность'
+        }
+        widgets = {
+            'birth_date':   DateInput(),
         }
 
 
 class Survey(forms.ModelForm):
     class Meta:
         model = models.Survey
-        fields = ('name', 'description')
+        fields = ('name', 'description', 'create_date')
         labels = {
-            'name': 'Название опроса', 
-            'description': 'Приветствие',
+            'name':         'Название опроса', 
+            'description':  'Приветствие',
+            'create_date':  'Дата создания',
+        }
+        widgets = {
+            'create_date':   DateInput(),
         }
 

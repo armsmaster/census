@@ -16,6 +16,10 @@
                     <th style="padding: 1px;">Номер записи</th>
                     <td style="padding: 1px;text-align: right;">{{ object.id }}</td>
                 </tr>
+				<tr>
+                    <th style="padding: 1px;">Группа</th>
+                    <td style="padding: 1px;text-align: right;">{{ object.group }}</td>
+                </tr>
                 <tr>
                     <th style="padding: 1px;">Название</th>
                     <td style="padding: 1px;text-align: right;">{{ object.name }}</td>
@@ -112,7 +116,7 @@
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h2>Опросы, в которых используется данный вопрос</h2>
-            <table id="map-survey-question-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+            <table id="map-survey-question-list" class="table table-hover table-bordered table-sm">
                 <thead class="thead-dark">
                     <tr>
                         <th>Название опроса</th>
@@ -136,7 +140,7 @@
 	<div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
             <h2>Собранные ответы на данный вопрос</h2>
-            <table id="survey-answers-list" class="table table-hover table-bordered table-sm" style="font-size: 0.8em;">
+            <table id="survey-answers-list" class="table table-hover table-bordered table-sm">
                 <thead class="thead-dark">
 					<tr>
 						<th style="width: 25%">Person</th>

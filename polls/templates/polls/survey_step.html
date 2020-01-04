@@ -6,9 +6,8 @@
 
     <div class="row justify-content-center">
         <div class="col-md-6" style="padding: 0px;">
-            <h1 class="text-center"><u>{{ object.survey.name }}</u></h1>
-            <p class="text-center"><b>{{ object.person.email }}</b></p>
-            <p class="text-center">{{ q_current.question.text }}</p>
+            <p class="text-center" style="font-size: 0.80em; color: #CCCCCC;"><b>{{ object.survey.name }} | {{ object.person.email }}</b></p>
+            <p class="text-center" style="font-size: 1.20em;">{{ q_current.question.text }}</p>
 			
 			<form method="post">
             {% csrf_token %}
