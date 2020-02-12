@@ -65,10 +65,10 @@
                 <tbody>
                 {% for i in object.questions.all %}
                 <tr class="parent">
-                    <td>{{ i.sort_order }} ({{ i.id }})</td>
+                    <td>{{ i.sort_order }} [<a href="{% url 'polls:survey-question-sort-order' pk=i.id %}">изменить</a>]</td>
                     <td>{{ i.question.name }}{%if not i.is_mandatory %}<br><b>[не обязательный]</b>{% endif %}</td>
                     <td>{% if i.has_condition %}<b>Да</b>{% else %}Нет{% endif %}</td>
-					<td>{{ i.question.data_type }}</td>
+					<td>{{ i.question.data_type_name }}</td>
                     <td class="technical-links"><a href="/survey-question/{{ i.id }}/">Параметры вопроса</a></td>
                     <td class="technical-links"><a href="/survey-question-delete/{{ i.id }}/">Удалить из опроса</a></td>
                 </tr>

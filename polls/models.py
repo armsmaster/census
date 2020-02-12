@@ -178,15 +178,45 @@ class MapSurveyQuestion(models.Model):
     
     is_mandatory = models.BooleanField(default=True)
     
+    class Meta:
+        ordering = ['sort_order']
+    
     def __str__(self):
-        return '{} ! {}'.format(self.survey.name, self.question.name)
+        return '{} / {:02.0f} {}'.format(self.survey.name, self.sort_order, self.question.name)
         
     def answers(self):
         return self.question.answers.all().filter(survey_instance__survey=self.survey)
     
     def has_condition(self):
+        self.tech_sort_order()
         return self.condition_question is not None
-
+    
+    def sort_order_put_after(self, number):
+        qs = self.survey.questions.filter(sort_order__gt=number)
+        for q in qs:
+            q.sort_order += 1
+            q.save()
+        self.sort_order = number + 1
+        self.save()
+        c = 1
+        for q in self.survey.questions.all():
+            q.sort_order = c
+            q.save()
+            c += 1
+        
+    def tech_sort_order(self):
+        qs = self.survey.questions.all()
+        for q in qs:
+            if not q.sort_order:
+                keep_going = True
+                i = 1
+                while keep_going:
+                    if not qs.filter(sort_order=i):
+                        q.sort_order = i
+                        q.save()
+                        keep_going = False
+                    else:
+                        i += 1
 
 class Person(models.Model):
 

@@ -79,7 +79,7 @@ class MapSurveyQuestion_Form(forms.ModelForm):
         model = models.MapSurveyQuestion
         fields = ('question',)
         labels = {
-            'question': 'Вопрос',
+            'question':     'Вопрос',
         }
 
 
@@ -89,8 +89,8 @@ class MapSurveyQuestion_Condition_Form(forms.ModelForm):
         model = models.MapSurveyQuestion
         fields = ('condition_question', 'condition_answer',)
         labels = {
-            'condition_question': 'Связанный вопрос',
-            'condition_answer': 'Ответ, являющийся условием',
+            'condition_question':   'Связанный вопрос',
+            'condition_answer':     'Ответ, являющийся условием',
         }
 
 
@@ -110,8 +110,24 @@ class MapUserSurvey_Form(forms.ModelForm):
         model = models.MapUserSurvey
         fields = ('person',)
         labels = {
-            'person': 'Респондент',
+            'person':       'Респондент',
         }
+
+
+class MapSurveyQuestionSortOrder(forms.Form):
+    
+    def __init__(self, data_choices=[], *args, **kwargs):
+        super(MapSurveyQuestionSortOrder, self).__init__(*args, **kwargs)
+        print()
+        print(args)
+        print()
+        print(kwargs)
+        obj = kwargs['initial']['obj']
+        surv = obj.survey
+        choices = [(q.sort_order, str(q.sort_order) + '. ' + q.question.name) for q in surv.questions.all().exclude(pk=obj.pk)]
+        self.fields['data'].choices = choices
+    
+    data = forms.ChoiceField(required=False, choices=[], label='После вопроса')
 
 
 class MSMC(forms.Form):

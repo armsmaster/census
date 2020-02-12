@@ -5,8 +5,7 @@
 
     <div class="row align-items-start">
         <div class="col-md-12" style="padding: 0px;">
-            <h1 class="text-center"><u>{{ object.survey.name }}</u></h1>
-            <p class="text-center"><b>{{ object.person.email }}</b></p>
+			<p class="text-center" style="font-size: 0.80em; color: #CCCCCC;"><b>{{ object.survey.name }} | {{ object.person.email }}</b></p>
             <p class="text-center">{{ object.survey.description }}</p>
             <p class="text-center"><a href="/survey/{{object.id}}/{{object.random_letters}}/{{ next_q.id }}/" class="btn btn-secondary">НАЧАТЬ</a></p>
         </div>

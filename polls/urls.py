@@ -8,6 +8,7 @@ app_name = 'polls'
 
 urlpatterns = [
     path('index/', views.index_news, name='index-news'),
+    path('user-guide/', views.user_guide, name='user-guide'),
     path('choice-list/', views.ChoiceList_List.as_view(), name='choice-list-list'),
     path('choice-list/create/', views.ChoiceList_Create.as_view(), name='choice-list-create'),
     path('choice-list-details/<int:pk>/', views.ChoiceList_Detail.as_view(), name='choice-list-detail'),
@@ -37,6 +38,7 @@ urlpatterns = [
     path('survey-question/<int:pk>/', views.Survey_Question_Detail.as_view(), name='survey-question-detail'),
     path('survey-question-update/<int:pk>/', views.Survey_Question_Update.as_view(), name='survey-question-update'),
     path('survey-question-update-mandatory/<int:pk>/', views.Survey_Question_Update_Mandatory.as_view(), name='survey-question-update-mandatory'),
+    path('survey-question-update-sort-order/<int:pk>/', views.Survey_Question_Set_Sort_Order.as_view(), name='survey-question-sort-order'),
     path('survey-question-delete/<int:pk>/', views.Survey_Question_Delete.as_view(), name='survey-question-delete'),
     path('survey-person-delete/<int:pk>/', views.Survey_Person_Delete.as_view(), name='survey-person-delete'),
     path('person/', views.Person_List.as_view(), name='person-list'),

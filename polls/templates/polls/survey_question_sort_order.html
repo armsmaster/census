@@ -1,0 +1,24 @@
+{% extends 'polls/base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-12" style="padding: 0px;">
+            <h1>Поставить вопрос после следующего вопроса:</h1>
+			
+            <div class="alert alert-warning" id="add-question-form">
+                <form method="post">
+                    {% csrf_token %}
+					<p>Вопрос: <b>{{ object }}</b></p>
+                    <table class="table table-bordered table-condensed table-hover">
+						{{ form.as_table }}
+					</table>
+                    <input class="btn btn-secondary" type="submit" value="Сохранить" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

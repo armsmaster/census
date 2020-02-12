@@ -290,6 +290,7 @@ class Survey_Detail(LoginRequiredMixin, generic.DetailView, generic.FormView):
         msq = form.save(commit=False)
         msq.survey = self.get_object()
         msq.save()
+        msq.tech_sort_order()
         return super(Survey_Detail, self).form_valid(form)
 
 
@@ -369,6 +370,32 @@ class Survey_Question_Update(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse('polls:survey-question-detail', kwargs={'pk': self.object.pk})
+
+
+class Survey_Question_Set_Sort_Order(LoginRequiredMixin, generic.DetailView, generic.FormView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+    model = models.MapSurveyQuestion
+    template_name = 'polls/survey_question_sort_order.html'
+    form_class = forms.MapSurveyQuestionSortOrder
+    
+    def get_success_url(self):
+        return reverse('polls:survey-detail', kwargs={'pk': self.get_object().survey.pk})
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['obj'] = self.get_object()
+        return initial
+    
+    def form_valid(self, form):
+        # print(form)
+        # print(form.cleaned_data['data'])
+        # print(self.get_object())
+        insert_after = int(form.cleaned_data['data'])
+        obj = self.get_object()
+        obj.sort_order_put_after(insert_after)
+        # print('insert_after', insert_after)
+        return super(Survey_Question_Set_Sort_Order, self).form_valid(form)
 
 
 class Survey_Question_Update_Mandatory(LoginRequiredMixin, generic.UpdateView):
@@ -782,6 +809,13 @@ def export_answers_to_xlsx(request, **kwargs):
 
 def index_news(request, **kwargs):
     template = loader.get_template('polls/index.html')
+    context = {
+    }
+    return HttpResponse(template.render(context, request))
+    
+
+def user_guide(request, **kwargs):
+    template = loader.get_template('polls/user_guide.html')
     context = {
     }
     return HttpResponse(template.render(context, request))
