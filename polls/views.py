@@ -819,3 +819,16 @@ def user_guide(request, **kwargs):
     context = {
     }
     return HttpResponse(template.render(context, request))
+
+
+def send_email_invite(request, **kwargs):
+    person_survey_id = kwargs.get('id', None)
+    person_survey = models.MapUserSurvey.objects.filter(pk=person_survey_id).first()
+    if not person_survey:
+        return HttpResponseRedirect(reverse('polls:survey-list', kwargs={'pk': question.pk}))
+    person_survey.send_email(
+        title_prefix='Приглашение пройти опрос ',
+        message_text='Пожалуйста, пройдите по ссылке и ответьте на вопросы: '
+    )
+    return HttpResponseRedirect(reverse('polls:survey-detail', kwargs={'pk': person_survey.survey.pk}))
+

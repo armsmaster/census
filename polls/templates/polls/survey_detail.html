@@ -91,11 +91,13 @@
                     <!--th>Имя</th>
                     <th>Фамилия</th>
                     <th>Секретный код</th-->
+					<th>Время приглашения</th>
                     <th>Время открытия</th>
                     <th>Время начала</th>
                     <th>Время завершения</th>
                     <th></th>
                     <th></th>
+					<th></th>
                 </thead>
                 <tbody>
                 {% for i in object.persons.all %}
@@ -104,11 +106,13 @@
                     <!--td>{{ i.person.name_first }}</td>
                     <td>{{ i.person.name_last }}</td>
                     <td>{{ i.random_letters }}</td-->
+					<td>{{ i.time_invited|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ i.time_visit|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ i.time_start|date:"d.m.Y H:i:s" }}</td>
                     <td>{{ i.time_end|date:"d.m.Y H:i:s" }}</td>
                     <td><a href="/survey/{{ i.id }}/{{ i.random_letters }}/">Ссылка</a> ({{request.get_host}}{{i.get_absolute_url}})</td>
-                    <td class="technical-links"><a href="/survey-person-delete/{{ i.id }}/">Удалить опросный лист</a></td>
+                    <td class="technical-links"><a href="/survey-person-invite/{{ i.id }}/">Пригласить</a></td>
+					<td class="technical-links"><a href="/survey-person-delete/{{ i.id }}/">Удалить опросный лист</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from django.core.mail import send_mail
 import datetime
 import random
 
@@ -245,10 +246,31 @@ class Person(models.Model):
 class MapUserSurvey(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='surveys')
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='persons')
+    time_invited = models.DateTimeField(null=True, blank=True)
     time_start = models.DateTimeField(null=True, blank=True)
     time_end = models.DateTimeField(null=True, blank=True)
     time_visit = models.DateTimeField(null=True, blank=True)
     random_letters = models.CharField(max_length=5, null=True, blank=True)
+    
+    def send_email(self, title_prefix=None, message_text=None):
+        if not title_prefix:
+            title_prefix = 'INVITATION: '
+        
+        if not message_text:
+            message_text = 'Please participate in our survey: '
+        
+        try:
+            send_mail(
+                title_prefix + self.survey.name,
+                message_text + 'http://uum.pythonanywhere.com/survey/' + str(self.pk) + '/' + self.random_letters + '/',
+                'CENSUS App',
+                [self.person.email],
+                fail_silently=False,
+            )
+            self.time_invited = datetime.datetime.now()
+            self.save()
+        except Exception as e:
+            print(e)
     
     def get_absolute_url(self):
         return reverse('polls:survey-start', kwargs={'id': self.id, 'secret': self.random_letters})

@@ -41,6 +41,7 @@ urlpatterns = [
     path('survey-question-update-sort-order/<int:pk>/', views.Survey_Question_Set_Sort_Order.as_view(), name='survey-question-sort-order'),
     path('survey-question-delete/<int:pk>/', views.Survey_Question_Delete.as_view(), name='survey-question-delete'),
     path('survey-person-delete/<int:pk>/', views.Survey_Person_Delete.as_view(), name='survey-person-delete'),
+    path('survey-person-invite/<int:id>/', views.send_email_invite, name='survey-person-invite'),
     path('person/', views.Person_List.as_view(), name='person-list'),
     path('person/create/', views.Person_Create.as_view(), name='person-create'),
     path('person-details/<int:pk>/', views.Person_Detail.as_view(), name='person-detail'),
